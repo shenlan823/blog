@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2023/08/24/hexo%E9%83%A8%E7%BD%B2/"/>
+      <url>/2023/08/24/hexo%E9%83%A8%E7%BD%B2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="hexo部署"><a href="#hexo部署" class="headerlink" title="hexo部署"></a>hexo部署</h1><h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><ul><li>准备：<ul><li>git账号</li><li>本地安装git、nodejs(建议12.0以上)</li></ul></li></ul><p>官方文档 <a href="https://hexo.io/zh-cn/">https://hexo.io/zh-cn/</a></p><h3 id="本地安装hexo"><a href="#本地安装hexo" class="headerlink" title="本地安装hexo"></a>本地安装hexo</h3><p><strong>一键部署</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init blog</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br><span class="line">npm server -p 5555</span><br></pre></td></tr></table></figure><p>在浏览器输入 <em><a href="http://localhost:5555/">http://localhost:5555</a></em> 检查是否搭建成功</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2023/08/24/hello-world/"/>
       <url>/2023/08/24/hello-world/</url>
