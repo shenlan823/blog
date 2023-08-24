@@ -11,6 +11,11 @@
   
   <title>
     
+      部署hexo到github上 
+      
+      
+      |
+    
      随波逐流
   </title>
 
@@ -152,16 +157,16 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title"></div>
+      <div class="post-title">部署hexo到github上</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-24 14:09:01
+          2023-08-24 14:45:51
         </span>
         
       </div>
       <div class="markdown-body">
-        <h1 id="hexo部署"><a href="#hexo部署" class="headerlink" title="hexo部署"></a>hexo部署</h1><h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><ul>
+        <h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><ul>
 <li>准备：<ul>
 <li>git账号</li>
 <li>本地安装git、nodejs(建议12.0以上)</li>
@@ -173,6 +178,32 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init blog</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br><span class="line">npm server -p 5555</span><br></pre></td></tr></table></figure>
 
 <p>在浏览器输入 <em><a target="_blank" rel="noopener" href="http://localhost:5555/">http://localhost:5555</a></em> 检查是否搭建成功</p>
+<p><img src="/../../public/images/hexo%E5%AE%89%E8%A3%85/hexo-example.png" alt="hexo-example"></p>
+<h2 id="部署网站"><a href="#部署网站" class="headerlink" title="部署网站"></a>部署网站</h2><ol>
+<li>安装 <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改配置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">url: https://shenlan823.github.io</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span><br><span class="line">  branch: [branch]</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>生成静态页面</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>部署网站</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>查看网站</p>
+<p>在浏览器输入 <a href="https://shenlan823.github.io/">https://shenlan823.github.io</a></p>
+</li>
+</ol>
 
       </div>
       
@@ -188,7 +219,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-24 14:09:01
+              2023-08-24 14:45:51
             </span>
             
           </div>
@@ -206,7 +237,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hexo%E9%83%A8%E7%BD%B2"><span class="toc-text">hexo部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo"><span class="toc-text">hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85hexo"><span class="toc-text">本地安装hexo</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo"><span class="toc-text">hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85hexo"><span class="toc-text">本地安装hexo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99"><span class="toc-text">部署网站</span></a></li></ol>
       
     </div>
   </div>
@@ -505,7 +536,7 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' +  + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F08%2F24%2Fhexo%25E9%2583%25A8%25E7%25BD%25B2%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%83%A8%E7%BD%B2hexo%E5%88%B0github%E4%B8%8A + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F08%2F24%2Fhexo%25E9%2583%25A8%25E7%25BD%25B2%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
