@@ -155,7 +155,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-30 20:47:12
+          2023-08-30 21:21:46
         </span>
         
               <span class="post-tags">
@@ -186,14 +186,7 @@
 <li>STP将一个有环网络中的某一条链路的某一个端口从逻辑上down掉，保证网络无环且正常运行；当其他任意一条主链路发生故障时，之前从逻辑上down掉的端口会自动激活，重新恢复连接，保证通讯的正常运行。</li>
 </ol>
 <h3 id="2-STP的算法"><a href="#2-STP的算法" class="headerlink" title="2. STP的算法"></a>2. STP的算法</h3><p>STP若想将一个有环的网络最终生成为一个无环的拓扑结构，一共需要 3 步：</p>
-<h4 id="2-1-选择根网桥【root】"><a href="#2-1-选择根网桥【root】" class="headerlink" title="2.1 选择根网桥【root】"></a>2.1 选择根网桥【root】</h4><p>每台交换机都有一个独立且唯一的BID【Bridge ID】</p>
-<p>BID &#x3D; 网桥优先级 ➕ 网桥 MAC 地址</p>
-<p>网桥的优先级取值范围：0 —— 61440</p>
-<p>默认值为：32768</p>
-<p>在选择根网桥时，BID最小的将胜出。</p>
-<p>因此在进行选举时，各个网桥先比较各自的优先级值，若优先级值完全一样时，再比较各个网桥的 MAC 地址。</p>
-<p>注：在手动配置 STP 的优先级时，改值必须能够被 2 整除，且是 16 的整数倍；管理员能够配置的最小值为4096</p>
-<p>STP配置优先级时的常用数值：4096、8192、24576、32768</p>
+<h4 id="2-1-选择根网桥【root】"><a href="#2-1-选择根网桥【root】" class="headerlink" title="2.1 选择根网桥【root】"></a>2.1 选择根网桥【root】</h4><p>每台交换机都有一个独立且唯一的BID【Bridge ID】<br>BID &#x3D; <code>网桥优先级</code> ➕ <code>网桥 MAC 地址</code><br>网桥的优先级取值范围：<code>0 —— 61440</code><br>默认值为：<code>32768</code><br>在选择根网桥时，BID最小的将胜出。<br>因此在进行选举时，各个网桥先比较各自的优先级值，若优先级值完全一样时，再比较各个网桥的 MAC 地址。<br><code>注：在手动配置 STP 的优先级时，改值必须能够被 2 整除，且是 16 的整数倍；管理员能够配置的最小值为4096</code><br>STP配置优先级时的常用数值：<code>4096、8192、24576、32768</code></p>
 <h4 id="2-2-选择根端口【RP】"><a href="#2-2-选择根端口【RP】" class="headerlink" title="2.2 选择根端口【RP】"></a>2.2 选择根端口【RP】</h4><p>根端口时在非根网桥上选举出来的，在非根网桥上选择根端口，共需4步：</p>
 <ol>
 <li>最低的到达根网桥的路径开销</li>
@@ -202,7 +195,7 @@
 <li>发送方最低的端口ID</li>
 </ol>
 <p><code>注：端口ID【Port ID】</code></p>
-<p>PID &#x3D; 端口优先级 ➕ 端口编号<br>端口优先级的取值范围：0 — 240<br>默认值为：128<br>端口编号：E0&#x2F;0&#x2F;1【左起第一个 0 表示板卡号、中间的 0 表示模块号、最右侧的 1 表示槽位号（端口编号）】<br>E0&#x2F;0&#x2F;1 的 PID &#x3D; 128.1</p>
+<p>PID &#x3D; <code>端口优先级</code> ➕ <code>端口编号</code><br>端口优先级的取值范围：<code>0 — 240</code><br><code>默认值为：128</code><br>端口编号：E0&#x2F;0&#x2F;1【左起第一个 0 表示板卡号、中间的 0 表示模块号、最右侧的 1 表示槽位号（端口编号）】<br>E0&#x2F;0&#x2F;1 的 PID &#x3D; 128.1</p>
 <h4 id="2-3-选择指定端口【DP】"><a href="#2-3-选择指定端口【DP】" class="headerlink" title="2.3 选择指定端口【DP】"></a>2.3 选择指定端口【DP】</h4><ul>
 <li>在每个网段上，选择1个指定端口</li>
 <li>根网桥上的所有端口均为指定端口</li>
@@ -216,7 +209,7 @@
 </ul>
 <h3 id="3-BPDU-【Bridge-Protocol-Data-Unit-｜-桥接协议数据单元】"><a href="#3-BPDU-【Bridge-Protocol-Data-Unit-｜-桥接协议数据单元】" class="headerlink" title="3 BPDU 【Bridge Protocol Data Unit ｜ 桥接协议数据单元】"></a>3 BPDU 【Bridge Protocol Data Unit ｜ 桥接协议数据单元】</h3><ol>
 <li>各个交换机使用 BPDU 来交换 STP 中要使用的信息</li>
-<li>BPDU 使用组播方式传递，使用的组播地址为：01-80-C2-00-00-00</li>
+<li>BPDU 使用组播方式传递，使用的组播地址为：<code>01-80-C2-00-00-00</code></li>
 <li>BPDU的种类<ol>
 <li>配置BPDU【Configuration BPDU】：用来实现 STP 的首次计算</li>
 <li>拓扑变更通告【TCN】BPDU：用来在STP发生变化的时候使用</li>
@@ -268,7 +261,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-30 20:47:12
+              2023-08-30 21:21:46
             </span>
             
                   <span class="post-tags">
