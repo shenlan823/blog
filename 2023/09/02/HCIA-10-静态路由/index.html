@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="shenlan" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      HCIA -- 10 -- 静态路由 
+      
+      
+      |
+    
+     随波逐流
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">随波逐流</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">HCIA -- 10 -- 静态路由</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-09-02 20:19:11
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/HICA/" title="HICA">
+                    #HICA
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1/" title="静态路由">
+                    #静态路由
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="一、路由的概念"><a href="#一、路由的概念" class="headerlink" title="一、路由的概念"></a>一、路由的概念</h1><ul>
+<li>跨越从源主机到目标主剧的一个互联网络来转发数据包的过程</li>
+<li>在转发过程中，负责路由数据包的机器，称之为路由器</li>
+</ul>
+<h1 id="二、路由器的工作原理"><a href="#二、路由器的工作原理" class="headerlink" title="二、路由器的工作原理"></a>二、路由器的工作原理</h1><ol>
+<li>路由器与交换机相比，在转发数据时，唯一的相同点在于，都会查表转发【路由器：路由表；交换机：MAC 地址吧】</li>
+<li>路由器与交换机在转发过程中的区别：<ol>
+<li>交换机会学习源 MAC 地址，通过不断的学习源 MAC 地址来完整自身的 MAC地址表象；路由器不学习源 IP 地址，只关心目标网络。</li>
+<li>交换机在无法找到目标网络时会进行广播转发操作，而路由器若没有找到路由表，则执行丢弃操作，向信源返回不可达信息。</li>
+</ol>
+</li>
+</ol>
+<h2 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h2><ul>
+<li>在路由器中维护的路由条目，路由器根据路由表做路径选择。</li>
+</ul>
+<h2 id="直连路由"><a href="#直连路由" class="headerlink" title="直连路由"></a>直连路由</h2><ul>
+<li>当在路由器上配置了借口的IP地址，并且接口状态为up的时候，路由表中就出现直连路由表项。</li>
+</ul>
+<h1 id="三、路由表的形成"><a href="#三、路由表的形成" class="headerlink" title="三、路由表的形成"></a>三、路由表的形成</h1><ol>
+<li>路由器不学习源IP地址</li>
+<li>路由器在配置好自身的接口IP地址后，首先会学习自身接口IP地址所属的网段，形成直连路由。</li>
+<li>对于非直连的路由，其默认是不会出现在我的本地路由表中的，若想知道非直连的路由，则需要：<ol>
+<li>静态路由：</li>
+<li>动态路由：RIP、OSPF、IGRP、EIGRP、IS-IS、BGPv4</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>注：在路由过程中，只有网络中的所有路由器的路由表完全一致了，该网络才能够正常转发数据。<br>若网络中的所有路由器的路由表完全一致后，该网络称之为【收敛】了。<br>只有收敛的网络才能够正常的转发数据<br>网络不收敛的状态称之为动荡状态｜抖动状态｜翻动状态</p>
+</blockquote>
+<h1 id="四、静态路由"><a href="#四、静态路由" class="headerlink" title="四、静态路由"></a>四、静态路由</h1><ul>
+<li>静态路由是由管理员手动写在路由表中的，且为单向的。</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>Huawei<span class="token operator">></span>system-view
+<span class="token punctuation">[</span>Huawei<span class="token punctuation">]</span>ip route_static <span class="token number">172.16</span>.1.0 <span class="token number">24</span> <span class="token number">10.1</span>.1.2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>路由表是手工设置</li>
+<li>除非网络管理员干预，否则静态路由不会发生变化</li>
+<li>路由表的形成不需要占用网络资源</li>
+<li>适用环境<ul>
+<li>一般用于网络规模很小、拓扑结构固定的网络中</li>
+</ul>
+</li>
+</ul>
+<h1 id="五、缺省路由"><a href="#五、缺省路由" class="headerlink" title="五、缺省路由"></a>五、缺省路由</h1><ul>
+<li>当路由器在自身的路由表中无法找到目标网络时，令路由器不要丢弃数据包，而是将数据包转发至一个默认的路由器上，这条路由器被称之为 —— 缺省路由</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>Huawei<span class="token operator">></span>system-view
+<span class="token punctuation">[</span>Huawei<span class="token punctuation">]</span>ip route-static <span class="token number">0.0</span>.0.0 <span class="token number">0</span> <span class="token number">10.1</span>.1.2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>在所有路由类型中，默认路由的优先级最低</li>
+<li>适用环境<ul>
+<li>一般应用在只有一个出口的末端网络【Stub Area】</li>
+<li>作为其它路由的补充出现</li>
+</ul>
+</li>
+</ul>
+<h1 id="六、路由器在转发数据包时的封装过程"><a href="#六、路由器在转发数据包时的封装过程" class="headerlink" title="六、路由器在转发数据包时的封装过程"></a>六、路由器在转发数据包时的封装过程</h1><ul>
+<li>路由器在路由数据包时，三层头部中的源IP地址与目标IP地址始终保持不变，而路由器会不断的使用自身接口的MAC地址做二层重封装，将数据包一路路由至目的地。</li>
+<li><code>结论：MAC地址的传输仅具有本地效应</code></li>
+</ul>
+<h1 id="七、单臂路由"><a href="#七、单臂路由" class="headerlink" title="七、单臂路由"></a>七、单臂路由</h1><ul>
+<li>交换机上的VLAN之间如何通信</li>
+</ul>
+<h2 id="实验配置"><a href="#实验配置" class="headerlink" title="实验配置"></a>实验配置</h2><p><img src="/../../images/HCIA/%E5%8D%95%E8%87%82%E8%B7%AF%E7%94%B1/%E5%8D%95%E8%87%82%E8%B7%AF%E7%94%B1.png" alt="单臂路由"></p>
+<p><strong>SW</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>SW<span class="token punctuation">]</span>vlan ba <span class="token number">2</span> <span class="token number">3</span>
+<span class="token punctuation">[</span>SW-GigabitEthernet0/0/1<span class="token punctuation">]</span>port link-type access
+<span class="token punctuation">[</span>SW-GigabitEthernet0/0/1<span class="token punctuation">]</span>port default vlan <span class="token number">2</span>
+<span class="token punctuation">[</span>SW-GigabitEthernet0/0/3<span class="token punctuation">]</span>port link-type access
+<span class="token punctuation">[</span>SW-GigabitEthernet0/0/3<span class="token punctuation">]</span>port default vlan <span class="token number">3</span>
+<span class="token punctuation">[</span>SW-GigabitEthernet0/0/2<span class="token punctuation">]</span>port link-type trunk
+
+<span class="token comment">#放行vlan 2 3 标签</span>
+<span class="token punctuation">[</span>SW-GigabitEthernet0/0/2<span class="token punctuation">]</span>port trunk allow-pass vlan <span class="token number">2</span> to <span class="token number">3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>R1</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>R1<span class="token punctuation">]</span>int g0/0/0.1
+
+<span class="token comment">#dot1q termination vid</span>
+<span class="token comment">#首先删除VLAN标签。接口在收到VLAN报文后，剥掉报文中携带的Tag后进行三层转发。</span>
+<span class="token comment">#然后添加VLAN标签。接口在发送报文时，将相应的VLAN信息添加到报文中再发送。</span>
+
+<span class="token punctuation">[</span>R1-GigabitEthernet0/0/0.1<span class="token punctuation">]</span>dot1q termination vid <span class="token number">2</span>
+<span class="token punctuation">[</span>R1-GigabitEthernet0/0/0.1<span class="token punctuation">]</span>ip address <span class="token number">192.168</span>.1.1 <span class="token number">24</span>
+<span class="token punctuation">[</span>R1-GigabitEthernet0/0/0.1<span class="token punctuation">]</span>arp broadcast <span class="token builtin class-name">enable</span>  <span class="token comment">#开启ARP广播功能</span>
+
+<span class="token punctuation">[</span>R1-GigabitEthernet0/0/0.2<span class="token punctuation">]</span>dot1q termination vid <span class="token number">3</span>
+<span class="token punctuation">[</span>R1-GigabitEthernet0/0/0.2<span class="token punctuation">]</span>ip address <span class="token number">192.168</span>.2.1 <span class="token number">24</span>
+<span class="token punctuation">[</span>R1-GigabitEthernet0/0/0.2<span class="token punctuation">]</span>arp broadcast <span class="token builtin class-name">enable</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>测试连通性</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">PC<span class="token operator">></span>ping <span class="token number">192.168</span>.2.10
+
+Ping <span class="token number">192.168</span>.2.10: <span class="token number">32</span> data bytes, Press Ctrl_C to <span class="token builtin class-name">break</span>
+From <span class="token number">192.168</span>.2.10: <span class="token assign-left variable">bytes</span><span class="token operator">=</span><span class="token number">32</span> <span class="token assign-left variable">seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">127</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">63</span> ms
+From <span class="token number">192.168</span>.2.10: <span class="token assign-left variable">bytes</span><span class="token operator">=</span><span class="token number">32</span> <span class="token assign-left variable">seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">127</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">78</span> ms
+From <span class="token number">192.168</span>.2.10: <span class="token assign-left variable">bytes</span><span class="token operator">=</span><span class="token number">32</span> <span class="token assign-left variable">seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">127</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">94</span> ms
+From <span class="token number">192.168</span>.2.10: <span class="token assign-left variable">bytes</span><span class="token operator">=</span><span class="token number">32</span> <span class="token assign-left variable">seq</span><span class="token operator">=</span><span class="token number">4</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">127</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">78</span> ms
+From <span class="token number">192.168</span>.2.10: <span class="token assign-left variable">bytes</span><span class="token operator">=</span><span class="token number">32</span> <span class="token assign-left variable">seq</span><span class="token operator">=</span><span class="token number">5</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">127</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">78</span> ms
+
+--- <span class="token number">192.168</span>.2.10 <span class="token function">ping</span> statistics ---
+  <span class="token number">5</span> packet<span class="token punctuation">(</span>s<span class="token punctuation">)</span> transmitted
+  <span class="token number">5</span> packet<span class="token punctuation">(</span>s<span class="token punctuation">)</span> received
+  <span class="token number">0.00</span>% packet loss
+  round-trip min/avg/max <span class="token operator">=</span> <span class="token number">63</span>/78/94 ms<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/09/01/HCIA-9-%E7%BD%91%E7%BB%9C%E5%B1%82/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-09-02 20:19:11
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/HICA/" title="HICA">
+                        #HICA
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1/" title="静态路由">
+                        #静态路由
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%B7%AF%E7%94%B1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、路由的概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">二、路由器的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="toc-text">路由表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E8%BF%9E%E8%B7%AF%E7%94%B1"><span class="toc-text">直连路由</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%B7%AF%E7%94%B1%E8%A1%A8%E7%9A%84%E5%BD%A2%E6%88%90"><span class="toc-text">三、路由表的形成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1"><span class="toc-text">四、静态路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BC%BA%E7%9C%81%E8%B7%AF%E7%94%B1"><span class="toc-text">五、缺省路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9C%A8%E8%BD%AC%E5%8F%91%E6%95%B0%E6%8D%AE%E5%8C%85%E6%97%B6%E7%9A%84%E5%B0%81%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">六、路由器在转发数据包时的封装过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%8D%95%E8%87%82%E8%B7%AF%E7%94%B1"><span class="toc-text">七、单臂路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E9%85%8D%E7%BD%AE"><span class="toc-text">实验配置</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a href="https://shenlan823.github.io">© 2023 随波逐流 By 随波逐流</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%2010%20--%20%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1 + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F09%2F02%2FHCIA-10-%25E9%259D%2599%25E6%2580%2581%25E8%25B7%25AF%25E7%2594%25B1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/09/02/HCIA-10-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
