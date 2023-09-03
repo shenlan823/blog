@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="shenlan" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      HCIA -- 12 -- OSPF 
+      
+      
+      |
+    
+     随波逐流
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">随波逐流</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">HCIA -- 12 -- OSPF</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-09-03 22:03:53
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/HCIA/" title="HCIA">
+                    #HCIA
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/OSPF/" title="OSPF">
+                    #OSPF
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="一、动态路由协议按使用范围进行分类"><a href="#一、动态路由协议按使用范围进行分类" class="headerlink" title="一、动态路由协议按使用范围进行分类"></a>一、动态路由协议按使用范围进行分类</h1><ol>
+<li>内部网关路由协议【IGP】：RIPv1、RIPv2、OSPF、IGRP、EIGRP、IS-IS</li>
+<li>外部网关路由协议【EGP】：BGPv4</li>
+</ol>
+<h1 id="二、自治系统【AS】"><a href="#二、自治系统【AS】" class="headerlink" title="二、自治系统【AS】"></a>二、自治系统【AS】</h1><ol>
+<li>若一些路由器工作在同一个物理环境内，彼此之间都可以相互通讯，使用相同的路由选择协议，遵从相同的选路规则和依据，执行相同的路由策略，那么我们就称这些路由器工作在同一个自治系统【AS】内部。</li>
+<li>若一种路由协议完全工作在同一个 AS 内部，那么该协议就属于内部网关路由协议</li>
+</ol>
+<h1 id="三、OSPF的基础概念"><a href="#三、OSPF的基础概念" class="headerlink" title="三、OSPF的基础概念"></a>三、OSPF的基础概念</h1><ol>
+<li>OSPF没有路由器个数的限制，被称之为无限广大的路由协议。</li>
+<li>OSPF为了防止单点故障引发的问题影响整个网络，因此其引入了区域【Area】的概念。</li>
+<li>OSPF规定，每个区域中最多可以包含255台路由器，但是OSPF没有区域个数的限制。</li>
+<li>在OSPF中，区域0被称之为骨干区域，其他区域被称之为非骨干区域。</li>
+<li>非骨干区域必须能够通过一个ABR【Area Border Router｜区域边界路由器】与骨干区域直接相连，若没有ABR负责联通骨干区域与非骨干区域，则该非骨干区域无法与骨干区域通讯。</li>
+<li>OSPF可以没有非骨干区域，所有路由器均工作在同一个区域0中（OSPF的单区域网络）</li>
+<li>若一台路由器的所有接口均工作在同一个区域中，则该路由器被称之为内部路由器；若该区域为区域0，则该路由器还可以被称为骨干路由器。</li>
+<li>若一台路由器的不同接口属于不同的区域，则该路由器被称之为区域边界路由器【ABR】，ABR的作用是用来在多个区域之间相互传递彼此的汇总路由信息。</li>
+<li>OSPF区域的划分是在接口上的</li>
+</ol>
+<h1 id="四、Router-ID【路由器ID】"><a href="#四、Router-ID【路由器ID】" class="headerlink" title="四、Router-ID【路由器ID】"></a>四、Router-ID【路由器ID】</h1><ol>
+<li>每台路由器都会拥有一个独立且唯一的RID</li>
+<li>路由器选举RID的规则：<ol>
+<li>若路由器上配置了Loopback接口，则Loopback接口的地址就是该路由器的RID。若存在多个Loopback接口，则地址最大的成为RID。</li>
+<li>若路由器上没有配置Loopback接口，则该路由器所有物理接口上，IP地址最大的将成为RID</li>
+<li>Loopbakc【本地回环接口】是一个虚拟接口，一般用途有2:<ol>
+<li>可以用来给路由器命名，在为路由器命名时，一般配置为32位的子网掩码。</li>
+<li>用来模拟一个网段，或一个具体的主机，用来测试网络的联通性。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="五、OSPF的3张表"><a href="#五、OSPF的3张表" class="headerlink" title="五、OSPF的3张表"></a>五、OSPF的3张表</h1><ol>
+<li>邻接关系表：保存的时自身直连邻居的路由器ID</li>
+<li>链路状态数据库表【LSDB｜Link State DataBase】：保存的是全网最完整的拓扑结构信息。</li>
+<li>路由表：保存的是到达每个网络节点的最佳路径</li>
+</ol>
+<h1 id="六、OSPF如何建立邻接关系"><a href="#六、OSPF如何建立邻接关系" class="headerlink" title="六、OSPF如何建立邻接关系"></a>六、OSPF如何建立邻接关系</h1><ol>
+<li>Down</li>
+<li>Init</li>
+<li>2-way</li>
+<li>Exstart</li>
+<li>Exchange</li>
+<li>Loading</li>
+<li>Full</li>
+</ol>
+<h2 id="5种报文"><a href="#5种报文" class="headerlink" title="5种报文"></a>5种报文</h2><ol>
+<li>Hello报文</li>
+<li>DBD【DataBase｜数据库描述报文】</li>
+<li>LSR【Link State Request｜链路状态请求报文】</li>
+<li>LSU【Link State Update｜链路状态更新报文】</li>
+<li>LSAck【Link State ACK｜链路状态确认报文】</li>
+</ol>
+<h1 id="七、OSPF建立邻接关系时需要满足的条件"><a href="#七、OSPF建立邻接关系时需要满足的条件" class="headerlink" title="七、OSPF建立邻接关系时需要满足的条件"></a>七、OSPF建立邻接关系时需要满足的条件</h1><ol>
+<li>两台路由器的Area-ID要一致，相同区域可建立关系，不同区域不能建立关系。</li>
+<li>OSPF可以支持配置密钥验证，若配置，则两端均需要配置，或不配置</li>
+<li>两台建立OSPF邻接关系的路由器的Hello时间与死亡时间必须一致【默认值：Hello - 10s；Dead - 40s；】</li>
+</ol>
+<h1 id="八、OSPF中的DR与BDR"><a href="#八、OSPF中的DR与BDR" class="headerlink" title="八、OSPF中的DR与BDR"></a>八、OSPF中的DR与BDR</h1><ol>
+<li>在一个广播型网络中，若所有路由器彼此之间都需要相互通讯，则各个路由器之间都需要建立邻接关系，建立的关系数量过于庞大，此方法不可取。</li>
+<li>OSPF在整个网络中通过选择DR【指定路由器】与 BDR【备份制定路由器】的方式来缓解全互联的问题。</li>
+<li>OSPF选择DR与BDR，先看优先级，优先级最高的成为DR，优先级第二高的成为BDR。</li>
+<li>OSPF优先级的取值范围位：0 — 255，默认值为 1</li>
+<li>若所有OSPF路由器的优先级值相同，则根据RID选择，RID最大的成为DR，RID次大的成为BDR。</li>
+<li>优先级为0，表示不参与选举；优先级为255，表示直接胜出。</li>
+<li>其余的路由器均称为DROthers【其他路由器】，DROthers只与DR&#x2F;BDR建立关系，DROthers之间处在2-way状态</li>
+</ol>
+<h1 id="九、OSPF的更新"><a href="#九、OSPF的更新" class="headerlink" title="九、OSPF的更新"></a>九、OSPF的更新</h1><ol>
+<li>OSPF使用与RIPv2一样的组播方式进行更新</li>
+<li>OSPF占用2个组播地址：<ol>
+<li>DR&#x2F;BDR：224.0.0.6</li>
+<li>DROthers：224.0.0.5</li>
+</ol>
+</li>
+</ol>
+<h1 id="十、OSPF的选路依据"><a href="#十、OSPF的选路依据" class="headerlink" title="十、OSPF的选路依据"></a>十、OSPF的选路依据</h1><ol>
+<li>OSPF根据带宽选路<ul>
+<li>Cost &#x3D; 10^8^&#x2F;BW</li>
+</ul>
+</li>
+<li>计算时，使用10^8^除以换算成bit的带宽。</li>
+<li>OSPF支持等价负载均衡，不支持非等价负载均衡。</li>
+</ol>
+<h1 id="十一、OSPF的优点"><a href="#十一、OSPF的优点" class="headerlink" title="十一、OSPF的优点"></a>十一、OSPF的优点</h1><ol>
+<li>OSPF可适用于大型网络环境</li>
+<li>OSPF属于触发更新，且有更新时只发送更新，没有更新时，10s发送一个Hello包</li>
+<li>OSPF收敛速度快</li>
+<li>OSPF支持区域的划分</li>
+<li>OSPF属于无类路由，传递路由更新时会携带子网掩码</li>
+<li>OSPF使用组播更新</li>
+<li>OSPF确保选择的路径无环</li>
+</ol>
+<h1 id="实验配置"><a href="#实验配置" class="headerlink" title="实验配置"></a>实验配置</h1><p><img src="/../../images/HCIA/OSPF/OSPF.png" alt="OSPF"></p>
+<p><strong>R1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[R1]ospf 1</span><br><span class="line">[R1-ospf-1]area 0</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]network 192.168.1.0 0.0.0.255</span><br><span class="line">[R1-ospf-1-area-0.0.0.0]network 10.1.1.0 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<p><strong>R2</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[R2]ospf 1</span><br><span class="line">[R2-ospf-1]area 0</span><br><span class="line">[R2-ospf-1-area-0.0.0.0]network 10.1.1.0 0.0.0.255</span><br><span class="line">[R2-ospf-1-area-0.0.0.0]network 20.1.1.1 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<p><strong>R3</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[R3]ospf 1</span><br><span class="line">[R3-ospf-1]area 0</span><br><span class="line">[R3-ospf-1-area-0.0.0.0]network 20.1.1.2 0.0.0.255</span><br><span class="line">[R3-ospf-1-area-0.0.0.0]network 172.16.1.10 0.0.0.255</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试连通性</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PC&gt;ping 172.16.1.10</span><br><span class="line"></span><br><span class="line">Ping 172.16.1.10: 32 data bytes, Press Ctrl_C to <span class="built_in">break</span></span><br><span class="line">From 172.16.1.10: bytes=32 <span class="built_in">seq</span>=1 ttl=125 time=31 ms</span><br><span class="line">From 172.16.1.10: bytes=32 <span class="built_in">seq</span>=2 ttl=125 time=15 ms</span><br><span class="line">From 172.16.1.10: bytes=32 <span class="built_in">seq</span>=3 ttl=125 time=32 ms</span><br><span class="line">From 172.16.1.10: bytes=32 <span class="built_in">seq</span>=4 ttl=125 time=15 ms</span><br><span class="line">From 172.16.1.10: bytes=32 <span class="built_in">seq</span>=5 ttl=125 time=16 ms</span><br><span class="line"></span><br><span class="line">--- 172.16.1.10 ping statistics ---</span><br><span class="line">  5 packet(s) transmitted</span><br><span class="line">  5 packet(s) received</span><br><span class="line">  0.00% packet loss</span><br><span class="line">  round-trip min/avg/max = 15/21/32 ms</span><br></pre></td></tr></table></figure>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/09/02/HCIA-11-RIP/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-09-03 22:03:53
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/HCIA/" title="HCIA">
+                        #HCIA
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/OSPF/" title="OSPF">
+                        #OSPF
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E6%8C%89%E4%BD%BF%E7%94%A8%E8%8C%83%E5%9B%B4%E8%BF%9B%E8%A1%8C%E5%88%86%E7%B1%BB"><span class="toc-text">一、动态路由协议按使用范围进行分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%87%AA%E6%B2%BB%E7%B3%BB%E7%BB%9F%E3%80%90AS%E3%80%91"><span class="toc-text">二、自治系统【AS】</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81OSPF%E7%9A%84%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">三、OSPF的基础概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Router-ID%E3%80%90%E8%B7%AF%E7%94%B1%E5%99%A8ID%E3%80%91"><span class="toc-text">四、Router-ID【路由器ID】</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81OSPF%E7%9A%843%E5%BC%A0%E8%A1%A8"><span class="toc-text">五、OSPF的3张表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81OSPF%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%82%BB%E6%8E%A5%E5%85%B3%E7%B3%BB"><span class="toc-text">六、OSPF如何建立邻接关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E7%A7%8D%E6%8A%A5%E6%96%87"><span class="toc-text">5种报文</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81OSPF%E5%BB%BA%E7%AB%8B%E9%82%BB%E6%8E%A5%E5%85%B3%E7%B3%BB%E6%97%B6%E9%9C%80%E8%A6%81%E6%BB%A1%E8%B6%B3%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-text">七、OSPF建立邻接关系时需要满足的条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81OSPF%E4%B8%AD%E7%9A%84DR%E4%B8%8EBDR"><span class="toc-text">八、OSPF中的DR与BDR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E3%80%81OSPF%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="toc-text">九、OSPF的更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E3%80%81OSPF%E7%9A%84%E9%80%89%E8%B7%AF%E4%BE%9D%E6%8D%AE"><span class="toc-text">十、OSPF的选路依据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81OSPF%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">十一、OSPF的优点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E9%85%8D%E7%BD%AE"><span class="toc-text">实验配置</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a href="https://shenlan823.github.io">© 2023 随波逐流 By 随波逐流</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%2012%20--%20OSPF + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F09%2F03%2FHCIA-12-OSPF%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/09/03/HCIA-12-OSPF/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
