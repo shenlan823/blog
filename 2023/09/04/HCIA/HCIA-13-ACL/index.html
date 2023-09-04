@@ -11,7 +11,7 @@
   
   <title>
     
-      HCIA -- 9 -- 网络层 
+      HCIA -- 13 -- ACL 
       
       
       |
@@ -151,11 +151,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">HCIA -- 9 -- 网络层</div>
+      <div class="post-title">HCIA -- 13 -- ACL</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-09-02 19:12:13
+          2023-09-04 22:39:29
         </span>
         
               <span class="post-tags">
@@ -168,8 +168,8 @@
                 </span>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" title="网络层">
-                    #网络层
+                  <a href="/tags/ACL/" title="ACL">
+                    #ACL
                   </a>
                 </span>
                 
@@ -177,107 +177,109 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="一、网络层的主要功能"><a href="#一、网络层的主要功能" class="headerlink" title="一、网络层的主要功能"></a>一、网络层的主要功能</h2><ol>
-<li>提供了通讯工程中必须要使用的另一个地址：逻辑 IP 地址【IPv4、IPv6】</li>
-<li>连接不同的媒介类型【内网 — 外网(Intra — Inter)】</li>
-<li>根据运行的不同路由协议，选择不同的最佳路径</li>
-<li>在选择好的最佳路径上负责路由数据包</li>
+        <h1 id="一、ACL的基本概念"><a href="#一、ACL的基本概念" class="headerlink" title="一、ACL的基本概念"></a>一、ACL的基本概念</h1><ol>
+<li>ACL是工作在路由器接口级的指令，在接口上对所有入站&#x2F;出站数据包进行过滤，筛选哪些包可以转发，哪些包需要被过滤。</li>
+<li>ACL同时关注第三层（IP头部）与第四层（TCP&#x2F;UDP头部）</li>
+<li>根据管理员预先定义好的规则，在接口上过滤数据。</li>
 </ol>
-<h3 id="IP包头格式"><a href="#IP包头格式" class="headerlink" title="IP包头格式"></a>IP包头格式</h3><table style="text-align:center;width:700px">
+<h1 id="二、ACL的主要功能"><a href="#二、ACL的主要功能" class="headerlink" title="二、ACL的主要功能"></a>二、ACL的主要功能</h1><ol>
+<li>ACL提供了防火墙最基础的安全手段。</li>
+<li>IPSec VPN在决定数据是否需要使用VPN传输时，需要ACL为其匹配感兴趣流量。</li>
+<li>在配置QoS时，同样需要调用ACL，使其达到控制流量的作用。</li>
+<li>在应用分布控制列表时，也需要使用ACL去定义流量。</li>
+<li>在配置防火墙实现单向通讯时，也需要使用ACL去匹配流量。</li>
+</ol>
+<h1 id="三、ACL的流量"><a href="#三、ACL的流量" class="headerlink" title="三、ACL的流量"></a>三、ACL的流量</h1><ol>
+<li>更具数据流的访问方向，在ACL中，存在【入】流量与【出】流量。</li>
+<li>ACL的核心工作原理 — 包过滤</li>
+<li>ACL关心第三层头部中的源IP地址与目标IP地址，还有第四层头部中的源端口号码与目标端口号码。</li>
+<li>ACL根据上述的4元素进行精准过滤。</li>
+<li>华为的网络设备在配置ACL的时候，默认隐含【允许】；Cisco的网络设备默认隐含【拒绝】。</li>
+</ol>
+<h1 id="四、ACL的入方向与出方向"><a href="#四、ACL的入方向与出方向" class="headerlink" title="四、ACL的入方向与出方向"></a>四、ACL的入方向与出方向</h1><p><strong>入方向</strong></p>
+<p><img src="/../../../images/HCIA/ACL/%E5%85%A5.PNG" alt="入方向"></p>
+<p><strong>出方向</strong></p>
+<p><img src="/../../../images/HCIA/ACL/%E5%87%BA.PNG" alt="出方向"></p>
+<ol>
+<li>ALC既可以应用在【入】方向上，也可以应用在【出】方向上。</li>
+<li>当ACL应用在【入】方向上时，其先检查接口是否配置了ACL，在检查路由表项。</li>
+<li>当ACL应用在【出】方向上时，其先检查路由表项，再检查是否配置了ACL。<br><code>结论：ACL应用在【入】方向更好，ACL可以应用在【出】方向。</code></li>
+</ol>
+<h1 id="五、访问控制列表的配置"><a href="#五、访问控制列表的配置" class="headerlink" title="五、访问控制列表的配置"></a>五、访问控制列表的配置</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建访问控制列表</span>
+<span class="token punctuation">[</span>Huawei<span class="token punctuation">]</span>acl <span class="token number">2001</span>
+<span class="token punctuation">[</span>Huawei-acl-basic-2001<span class="token punctuation">]</span>rule deny <span class="token builtin class-name">source</span> <span class="token number">192.168</span>.10 <span class="token number">0.0</span>.0.255
 
+<span class="token comment">#应用ACL</span>
+<span class="token punctuation">[</span>Huawei<span class="token punctuation">]</span>interface GigabitEthernet <span class="token number">0</span>/0/0
+<span class="token punctuation">[</span>huawei-GigabitEthernet <span class="token number">0</span>/0/0<span class="token punctuation">]</span>traffic-filter inbound acl <span class="token number">2001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="六、ACL的种类"><a href="#六、ACL的种类" class="headerlink" title="六、ACL的种类"></a>六、ACL的种类</h1><ol>
+<li>基本类型ACL【Cisco：标准ACL】<ol>
+<li>基本类型的ACL使用的表号为：2000-2999</li>
+<li>基本类型的ACL仅仅只能够根据源IP地址进行访问控制过滤，提供最基础的网络防范手段。</li>
+</ol>
+</li>
+<li>高级类型ACL【Cisco：扩展ACL】<ol>
+<li>高级类型的ACL能够同时根据源IP地址、目标IP地址、第四层协议（TCP&#x2F;UDP）、四层协议所使用的服务端口号码，根据这4元素进行精准过滤和访问控制。</li>
+<li>高级类型的的ACL使用的表号为3000 — 3999</li>
+</ol>
+</li>
+<li>适配二层MAC的ACL【Cisco：基于MAC地址的ACL】</li>
+<li>基于时间的ACL【绝对时间、时间周期】</li>
+</ol>
+<p><code>注：ACL最好应用在距离信源最近的设备上,且应用将ACL应用在最近的设备的入方向上</code></p>
+<table style="text-align:center;width:700px">
 <tr style="background:rgb(238,133,109)">
-    <td>版本 (4)</td><td>首部长度 (4)</td><td>优先级与服务类型 (8)</td><td colspan="2">总长度 (16)</td><td rowspan="5" style="background:#fff">20 字节</td>
+    <td>端口号码</td><td>关键字</td><td>具体阐述</td><td>TCP/UDP</td>
 </tr>
-<tr style="background:rgb(238,234,217)">
-    <td colspan="3">标识符 (16)</td><td>标志 (3)</td><td>段偏移量 (13)</td>
+<tr>
+    <td>20</td><td>FTP-Data</td><td>（文件传输协议）FTP（数据）</td><td>TCP</td>
 </tr>
-<tr style="background:rgb(238,133,109,0.6)">
-    <td colspan="2">TTL (8)</td><td>协议号 (8)</td><td colspan="2">首部校验和 (16)</td>
+<tr>
+    <td>21</td><td>FTP</td><td>（文件传输协议）FTP</td><td>TCP</td>
 </tr>
-<tr style="background:rgb(238,234,217)">
-    <td colspan="5">源IP地址 (16)</td>
+<tr>
+    <td>23</td><td>Telnet</td><td>终端连接</td><td>TCP</td>
 </tr>
-<tr style="background:rgb(238,133,109,0.6)">
-    <td colspan="5">目标IP地址 (16)</td>
+<tr>
+    <td>25</td><td>SMTP</td><td>简单邮件传输协议</td><td>TCP</td>
 </tr>
-<tr style="background:rgb(238,234,217)">
-    <td colspan="5">可选项</td><td rowspan="2" style="background:#fff"></td>
+<tr>
+    <td>41</td><td>NameServer</td><td>主机名服务</td><td>UDP</td>
 </tr>
-<tr style="background:rgb(238,133,109,0.6)">
-    <td colspan="5">数据</td>
+<tr>
+    <td>53</td><td>Domain</td><td>域名服务（DNS）</td><td>TCP/UDP</td>
+</tr>
+<tr>
+    <td>69</td><td>TFTP</td><td>简单文件传输协议（TFTP）</td><td>UDP</td>
+</tr>
+<tr>
+    <td>80</td><td>www</td><td>万维网</td><td>TCP</td>
 </tr>
 </table>
 
-<h2 id="QoS【服务质量】"><a href="#QoS【服务质量】" class="headerlink" title="QoS【服务质量】"></a>QoS【服务质量】</h2><p><code>分类、标记、流量调节、拥塞管理、拥塞避免</code></p>
-<ol start="7">
-<li>网络协议保留使用</li>
-<li>网络协议保留使用</li>
-<li>音频流量</li>
-<li>振铃流量</li>
-<li>视频流量</li>
-<li>高优先级</li>
-<li>中优先级</li>
-<li>BE【尽力而为】</li>
+<h1 id="七、ACL中的常见的服务"><a href="#七、ACL中的常见的服务" class="headerlink" title="七、ACL中的常见的服务"></a>七、ACL中的常见的服务</h1><ol>
+<li>HTTP【超文本传输协议】：TCP 80</li>
+<li>HTTPS【安全的超文本传输协议】：TCP 443</li>
+<li>FTP【文件传输协议】：TCP 20&#x2F;21</li>
+<li>SMTP【简单邮件传输协议】：TCP 25</li>
+<li>POP3【邮局协议版本3】：TCP 110</li>
+<li>TFTP【简单文件传输协议】：UDP 69</li>
+<li>DNS【域名系统】：TCP&#x2F;UDP 53</li>
 </ol>
-<h2 id="二、网络层的IPv4头部"><a href="#二、网络层的IPv4头部" class="headerlink" title="二、网络层的IPv4头部"></a>二、网络层的IPv4头部</h2><p>网络层的 <code>IP</code> 头部默认为 <code>20Byte</code></p>
-<ol>
-<li>版本字段：用来表明当前IP协议所使用的版本号【IPv4】。</li>
-<li>首部长度字段：用来表明当前IP头部一共多大【默认20Byte】。</li>
-<li>服务类型与优先级：用来配合三层实现QoS使用。</li>
-<li>总长度：包含各层头部封装与用户发送的原始数据的总大小。</li>
-<li>标识符：</li>
-<li>标志：在数据被分片之后，传送到对端，对端重组时保证不会乱序。</li>
-<li>段偏移量：</li>
-<li>TTL：网络中的每一个数据包默认都携带一TTL值，该值经过一个3层设备就减 1，当减至0时还没有被任何接收方接收，则该数据自动消失被丢弃，保证网络中不存在过多的垃圾文件。</li>
-<li>协议号：三层与四层之间的服务接入点，若协议号为6，则表明上层使用的是TCP，若协议号为17，则表明上层使用的是UDP。</li>
-<li>首部校验和：三层用来在首部进行校验和检测的地方。</li>
-<li>源 IP 地址：32 bit</li>
-<li>目的 IP 地址：32 bit</li>
+<h1 id="八、ACL中的4个操作符"><a href="#八、ACL中的4个操作符" class="headerlink" title="八、ACL中的4个操作符"></a>八、ACL中的4个操作符</h1><ol>
+<li>eq：等于</li>
+<li>gt：大于</li>
+<li>Lt：小于</li>
+<li>neq：不等于</li>
 </ol>
-<h2 id="三、IP地址的作用"><a href="#三、IP地址的作用" class="headerlink" title="三、IP地址的作用"></a>三、IP地址的作用</h2><ol>
-<li>一个IP地址可以用来标识一个独立的网络节点。</li>
-<li>可以用来标识一个网段【组】。</li>
-</ol>
-<h2 id="四、IP地址的分类"><a href="#四、IP地址的分类" class="headerlink" title="四、IP地址的分类"></a>四、IP地址的分类</h2><ul>
-<li>A：1 — 126 【通讯使用】</li>
-<li>B：128 — 191 【通讯使用】</li>
-<li>C：192 — 223 【通讯使用】</li>
-<li>D：224 — 239 【组播使用】</li>
-<li>E：240 — 254 【科学研究使用】</li>
-</ul>
-<p><code>注：127【本地回环接口地址】：用来实现本机网卡测试。</code><br><code>::1：IPv6 中的本地回环接口地址。</code></p>
-<h2 id="五、私有地址"><a href="#五、私有地址" class="headerlink" title="五、私有地址"></a>五、私有地址</h2><ul>
-<li>A：10.0.0.0&#x2F;8</li>
-<li>B：172.16.0.0 — 172.31.255.255&#x2F;12</li>
-<li>C：192.168.0.0 — 192.168.255.255&#x2F;16</li>
-</ul>
-<p>私有地址是网络从 <code>IPv4</code> 向 <code>IPv6</code> 过度种的过度技术，通过使用私有地址，能够明显的降低公有地址的消耗过度。<br>除了以上 3 段私有地址外，其他地址均为公有地址<br>注：<code>169.254.0.0/16 是微软买断的一个网段</code></p>
-<h2 id="六、子网掩码的作用"><a href="#六、子网掩码的作用" class="headerlink" title="六、子网掩码的作用"></a>六、子网掩码的作用</h2><p>用来区分不同的网段</p>
-<h2 id="七、子网的划分"><a href="#七、子网的划分" class="headerlink" title="七、子网的划分"></a>七、子网的划分</h2><ol>
-<li>主机位不能全为 0，主机位全为 0 则表示的是网段</li>
-<li>主机位不能全为 1，主机为全为 1 则表示的是广播地址</li>
-</ol>
-<h2 id="八、ARP-协议"><a href="#八、ARP-协议" class="headerlink" title="八、ARP 协议"></a>八、ARP 协议</h2><p>地址解析协议：已知对方的 <code>IP地址</code>，解析对方的 <code>MAC地址</code>。<br>客户端在与对端设备通讯时，首先检测自身的 <code>ARP缓存表</code>，若自身的 <code>ARP缓存表</code> 中不存在对端的 <code>IP</code> 与 <code>MAC地址</code> 的映射关系，则信源发送 <code>ARP广播请求</code>。<br>在信源发送的 <code>ARP广播请求</code> 中，包含了其自身的 <code>源IP地址</code> 与 <code>源MAC地址</code>，当对端设备接收到该 <code>ARP广播请求</code> 后，对端设备将会给予单播响应回复，而无需发送广播响应。<br>在信源得知了对端的 <code>MAC地址</code> 后，将对端设备 <code>IP地址</code> 与 <code>MAC地址</code> 做对应关系，保存在自身的 <code>ARP缓存表</code> 中后，方可与对端通讯。</p>
-<h2 id="九、RARP-反向地址解析协议"><a href="#九、RARP-反向地址解析协议" class="headerlink" title="九、RARP 反向地址解析协议"></a>九、RARP 反向地址解析协议</h2><p>已知自身的 MAC地址，广播请求一个 IP地址<br>网络中的负责分配 IP地址 的服务器单薄给予响应，为客户端分配 IP地址</p>
-<p><code>注：RARP就是DHCP的前身协议</code><br>RARP 因为需要让负责分配 <code>IP地址</code> 的服务器预先知道客户端的 <code>MAC地址</code> 后，才能给客户端分配 <code>IP地址</code>。</p>
-<h2 id="十、代理-ARP"><a href="#十、代理-ARP" class="headerlink" title="十、代理 ARP"></a>十、代理 ARP</h2><ol>
-<li>路由器默认情况下不会发送广播报文。</li>
-<li>来自客户端的 <code>ARP广播请求</code> 不会被路由器传至对端。</li>
-<li>路由器会将自身接口的 <code>IP地址</code> 与 <code>MAC地址</code> 以单播的方式响应给信源主机，信源主机的 <code>ARP缓存表</code> 中保存的就是直连路由器的接口 <code>IP地址</code> 与 <code>MAC地址</code> 的对应关系。</li>
-<li>信源主机就会将所有访问目标网络的数据统一发送给自己的直连路由器。</li>
-<li>路由器在两个客户端通讯的过程中，起到代理的作用。</li>
-</ol>
-<h2 id="十一、ICMP-【网际控制消息协议】"><a href="#十一、ICMP-【网际控制消息协议】" class="headerlink" title="十一、ICMP 【网际控制消息协议】"></a>十一、ICMP 【网际控制消息协议】</h2><ul>
-<li>ICMP：用来检测网络的双向连通性。</li>
-<li>ping [-t] [-a] [-l 字节数] IP_Address ｜ Target_names</li>
-</ul>
-
+<h1 id="九、实验配置"><a href="#九、实验配置" class="headerlink" title="九、实验配置"></a>九、实验配置</h1>
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2023/08/31/HCIA-7-%E9%93%BE%E8%B7%AF%E8%81%9A%E5%90%88/" target="_self">
+              <a href="/2023/09/03/HCIA/HCIA-12-OSPF/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -286,7 +288,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-09-02 19:12:13
+              2023-09-04 22:39:29
             </span>
             
                   <span class="post-tags">
@@ -299,8 +301,8 @@
                     </span>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" title="网络层">
-                        #网络层
+                      <a href="/tags/ACL/" title="ACL">
+                        #ACL
                       </a>
                     </span>
                     
@@ -308,11 +310,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2023/09/02/HCIA-10-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -326,7 +323,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-text">一、网络层的主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%8C%85%E5%A4%B4%E6%A0%BC%E5%BC%8F"><span class="toc-text">IP包头格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QoS%E3%80%90%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E3%80%91"><span class="toc-text">QoS【服务质量】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84IPv4%E5%A4%B4%E9%83%A8"><span class="toc-text">二、网络层的IPv4头部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81IP%E5%9C%B0%E5%9D%80%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">三、IP地址的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81IP%E5%9C%B0%E5%9D%80%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">四、IP地址的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%A7%81%E6%9C%89%E5%9C%B0%E5%9D%80"><span class="toc-text">五、私有地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">六、子网掩码的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AD%90%E7%BD%91%E7%9A%84%E5%88%92%E5%88%86"><span class="toc-text">七、子网的划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81ARP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">八、ARP 协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81RARP-%E5%8F%8D%E5%90%91%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="toc-text">九、RARP 反向地址解析协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E4%BB%A3%E7%90%86-ARP"><span class="toc-text">十、代理 ARP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81ICMP-%E3%80%90%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%B6%88%E6%81%AF%E5%8D%8F%E8%AE%AE%E3%80%91"><span class="toc-text">十一、ICMP 【网际控制消息协议】</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81ACL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、ACL的基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81ACL%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-text">二、ACL的主要功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81ACL%E7%9A%84%E6%B5%81%E9%87%8F"><span class="toc-text">三、ACL的流量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81ACL%E7%9A%84%E5%85%A5%E6%96%B9%E5%90%91%E4%B8%8E%E5%87%BA%E6%96%B9%E5%90%91"><span class="toc-text">四、ACL的入方向与出方向</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%88%97%E8%A1%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">五、访问控制列表的配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81ACL%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-text">六、ACL的种类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81ACL%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-text">七、ACL中的常见的服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81ACL%E4%B8%AD%E7%9A%844%E4%B8%AA%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-text">八、ACL中的4个操作符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%AE%9E%E9%AA%8C%E9%85%8D%E7%BD%AE"><span class="toc-text">九、实验配置</span></a></li></ol>
       
     </div>
   </div>
@@ -612,12 +609,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%209%20--%20%E7%BD%91%E7%BB%9C%E5%B1%82 + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F09%2F01%2FHCIA-9-%25E7%25BD%2591%25E7%25BB%259C%25E5%25B1%2582%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%2013%20--%20ACL + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F09%2F04%2FHCIA%2FHCIA-13-ACL%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/09/01/HCIA-9-%E7%BD%91%E7%BB%9C%E5%B1%82/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/09/04/HCIA/HCIA-13-ACL/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         

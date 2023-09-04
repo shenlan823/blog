@@ -11,7 +11,7 @@
   
   <title>
     
-      HCIA -- 6 -- STP 
+      HCIA -- 9 -- 网络层 
       
       
       |
@@ -151,11 +151,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">HCIA -- 6 -- STP</div>
+      <div class="post-title">HCIA -- 9 -- 网络层</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-30 21:21:46
+          2023-09-02 19:12:13
         </span>
         
               <span class="post-tags">
@@ -168,8 +168,8 @@
                 </span>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/STP/" title="STP">
-                    #STP
+                  <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" title="网络层">
+                    #网络层
                   </a>
                 </span>
                 
@@ -177,82 +177,107 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="一、二层广播风暴的产生"><a href="#一、二层广播风暴的产生" class="headerlink" title="一、二层广播风暴的产生"></a>一、二层广播风暴的产生</h2><ol>
-<li>交换机的工作原理中存在缺陷，交换机在无法找到目标网络时会发送广播。</li>
-<li>弱管理员将网络的物理拓扑结构连接成环路的话，则在二层网络中，将会引起广播风暴。</li>
-<li>广播风暴会导致交换机耗尽自身全部资源，致使硬件设备死机或硬件损坏。</li>
+        <h2 id="一、网络层的主要功能"><a href="#一、网络层的主要功能" class="headerlink" title="一、网络层的主要功能"></a>一、网络层的主要功能</h2><ol>
+<li>提供了通讯工程中必须要使用的另一个地址：逻辑 IP 地址【IPv4、IPv6】</li>
+<li>连接不同的媒介类型【内网 — 外网(Intra — Inter)】</li>
+<li>根据运行的不同路由协议，选择不同的最佳路径</li>
+<li>在选择好的最佳路径上负责路由数据包</li>
 </ol>
-<h2 id="二、STP的工作原理"><a href="#二、STP的工作原理" class="headerlink" title="二、STP的工作原理"></a>二、STP的工作原理</h2><ol>
-<li>STP将一个有环网络中的某一条链路的某一个端口从逻辑上down掉，保证网络无环且正常运行；当其他任意一条主链路发生故障时，之前从逻辑上down掉的端口会自动激活，重新恢复连接，保证通讯的正常运行。</li>
+<h3 id="IP包头格式"><a href="#IP包头格式" class="headerlink" title="IP包头格式"></a>IP包头格式</h3><table style="text-align:center;width:700px">
+
+<tr style="background:rgb(238,133,109)">
+    <td>版本 (4)</td><td>首部长度 (4)</td><td>优先级与服务类型 (8)</td><td colspan="2">总长度 (16)</td><td rowspan="5" style="background:#fff">20 字节</td>
+</tr>
+<tr style="background:rgb(238,234,217)">
+    <td colspan="3">标识符 (16)</td><td>标志 (3)</td><td>段偏移量 (13)</td>
+</tr>
+<tr style="background:rgb(238,133,109,0.6)">
+    <td colspan="2">TTL (8)</td><td>协议号 (8)</td><td colspan="2">首部校验和 (16)</td>
+</tr>
+<tr style="background:rgb(238,234,217)">
+    <td colspan="5">源IP地址 (16)</td>
+</tr>
+<tr style="background:rgb(238,133,109,0.6)">
+    <td colspan="5">目标IP地址 (16)</td>
+</tr>
+<tr style="background:rgb(238,234,217)">
+    <td colspan="5">可选项</td><td rowspan="2" style="background:#fff"></td>
+</tr>
+<tr style="background:rgb(238,133,109,0.6)">
+    <td colspan="5">数据</td>
+</tr>
+</table>
+
+<h2 id="QoS【服务质量】"><a href="#QoS【服务质量】" class="headerlink" title="QoS【服务质量】"></a>QoS【服务质量】</h2><p><code>分类、标记、流量调节、拥塞管理、拥塞避免</code></p>
+<ol start="7">
+<li>网络协议保留使用</li>
+<li>网络协议保留使用</li>
+<li>音频流量</li>
+<li>振铃流量</li>
+<li>视频流量</li>
+<li>高优先级</li>
+<li>中优先级</li>
+<li>BE【尽力而为】</li>
 </ol>
-<h3 id="2-STP的算法"><a href="#2-STP的算法" class="headerlink" title="2. STP的算法"></a>2. STP的算法</h3><p>STP若想将一个有环的网络最终生成为一个无环的拓扑结构，一共需要 3 步：</p>
-<h4 id="2-1-选择根网桥【root】"><a href="#2-1-选择根网桥【root】" class="headerlink" title="2.1 选择根网桥【root】"></a>2.1 选择根网桥【root】</h4><p>每台交换机都有一个独立且唯一的BID【Bridge ID】<br>BID &#x3D; <code>网桥优先级</code> ➕ <code>网桥 MAC 地址</code><br>网桥的优先级取值范围：<code>0 —— 61440</code><br>默认值为：<code>32768</code><br>在选择根网桥时，BID最小的将胜出。<br>因此在进行选举时，各个网桥先比较各自的优先级值，若优先级值完全一样时，再比较各个网桥的 MAC 地址。<br><code>注：在手动配置 STP 的优先级时，改值必须能够被 2 整除，且是 16 的整数倍；管理员能够配置的最小值为4096</code><br>STP配置优先级时的常用数值：<code>4096、8192、24576、32768</code></p>
-<h4 id="2-2-选择根端口【RP】"><a href="#2-2-选择根端口【RP】" class="headerlink" title="2.2 选择根端口【RP】"></a>2.2 选择根端口【RP】</h4><p>根端口时在非根网桥上选举出来的，在非根网桥上选择根端口，共需4步：</p>
+<h2 id="二、网络层的IPv4头部"><a href="#二、网络层的IPv4头部" class="headerlink" title="二、网络层的IPv4头部"></a>二、网络层的IPv4头部</h2><p>网络层的 <code>IP</code> 头部默认为 <code>20Byte</code></p>
 <ol>
-<li>最低的到达根网桥的路径开销</li>
-<li>最低的发送方网桥ID</li>
-<li>最低的端口优先级</li>
-<li>发送方最低的端口ID</li>
+<li>版本字段：用来表明当前IP协议所使用的版本号【IPv4】。</li>
+<li>首部长度字段：用来表明当前IP头部一共多大【默认20Byte】。</li>
+<li>服务类型与优先级：用来配合三层实现QoS使用。</li>
+<li>总长度：包含各层头部封装与用户发送的原始数据的总大小。</li>
+<li>标识符：</li>
+<li>标志：在数据被分片之后，传送到对端，对端重组时保证不会乱序。</li>
+<li>段偏移量：</li>
+<li>TTL：网络中的每一个数据包默认都携带一TTL值，该值经过一个3层设备就减 1，当减至0时还没有被任何接收方接收，则该数据自动消失被丢弃，保证网络中不存在过多的垃圾文件。</li>
+<li>协议号：三层与四层之间的服务接入点，若协议号为6，则表明上层使用的是TCP，若协议号为17，则表明上层使用的是UDP。</li>
+<li>首部校验和：三层用来在首部进行校验和检测的地方。</li>
+<li>源 IP 地址：32 bit</li>
+<li>目的 IP 地址：32 bit</li>
 </ol>
-<p><code>注：端口ID【Port ID】</code></p>
-<p>PID &#x3D; <code>端口优先级</code> ➕ <code>端口编号</code><br>端口优先级的取值范围：<code>0 — 240</code><br><code>默认值为：128</code><br>端口编号：E0&#x2F;0&#x2F;1【左起第一个 0 表示板卡号、中间的 0 表示模块号、最右侧的 1 表示槽位号（端口编号）】<br>E0&#x2F;0&#x2F;1 的 PID &#x3D; 128.1</p>
-<h4 id="2-3-选择指定端口【DP】"><a href="#2-3-选择指定端口【DP】" class="headerlink" title="2.3 选择指定端口【DP】"></a>2.3 选择指定端口【DP】</h4><ul>
-<li>在每个网段上，选择1个指定端口</li>
-<li>根网桥上的所有端口均为指定端口</li>
-<li>非根网桥上指定端口选举的过程分为4步：<ol>
-<li>BPDU 中的根网桥 ID</li>
-<li>最低的到达根网桥的路径开销</li>
-<li>发送方的网桥 ID</li>
-<li>若优先级相同，则具有最低 MAC 地址</li>
+<h2 id="三、IP地址的作用"><a href="#三、IP地址的作用" class="headerlink" title="三、IP地址的作用"></a>三、IP地址的作用</h2><ol>
+<li>一个IP地址可以用来标识一个独立的网络节点。</li>
+<li>可以用来标识一个网段【组】。</li>
 </ol>
-</li>
+<h2 id="四、IP地址的分类"><a href="#四、IP地址的分类" class="headerlink" title="四、IP地址的分类"></a>四、IP地址的分类</h2><ul>
+<li>A：1 — 126 【通讯使用】</li>
+<li>B：128 — 191 【通讯使用】</li>
+<li>C：192 — 223 【通讯使用】</li>
+<li>D：224 — 239 【组播使用】</li>
+<li>E：240 — 254 【科学研究使用】</li>
 </ul>
-<h3 id="3-BPDU-【Bridge-Protocol-Data-Unit-｜-桥接协议数据单元】"><a href="#3-BPDU-【Bridge-Protocol-Data-Unit-｜-桥接协议数据单元】" class="headerlink" title="3 BPDU 【Bridge Protocol Data Unit ｜ 桥接协议数据单元】"></a>3 BPDU 【Bridge Protocol Data Unit ｜ 桥接协议数据单元】</h3><ol>
-<li>各个交换机使用 BPDU 来交换 STP 中要使用的信息</li>
-<li>BPDU 使用组播方式传递，使用的组播地址为：<code>01-80-C2-00-00-00</code></li>
-<li>BPDU的种类<ol>
-<li>配置BPDU【Configuration BPDU】：用来实现 STP 的首次计算</li>
-<li>拓扑变更通告【TCN】BPDU：用来在STP发生变化的时候使用</li>
+<p><code>注：127【本地回环接口地址】：用来实现本机网卡测试。</code><br><code>::1：IPv6 中的本地回环接口地址。</code></p>
+<h2 id="五、私有地址"><a href="#五、私有地址" class="headerlink" title="五、私有地址"></a>五、私有地址</h2><ul>
+<li>A：10.0.0.0&#x2F;8</li>
+<li>B：172.16.0.0 — 172.31.255.255&#x2F;12</li>
+<li>C：192.168.0.0 — 192.168.255.255&#x2F;16</li>
+</ul>
+<p>私有地址是网络从 <code>IPv4</code> 向 <code>IPv6</code> 过度种的过度技术，通过使用私有地址，能够明显的降低公有地址的消耗过度。<br>除了以上 3 段私有地址外，其他地址均为公有地址<br>注：<code>169.254.0.0/16 是微软买断的一个网段</code></p>
+<h2 id="六、子网掩码的作用"><a href="#六、子网掩码的作用" class="headerlink" title="六、子网掩码的作用"></a>六、子网掩码的作用</h2><p>用来区分不同的网段</p>
+<h2 id="七、子网的划分"><a href="#七、子网的划分" class="headerlink" title="七、子网的划分"></a>七、子网的划分</h2><ol>
+<li>主机位不能全为 0，主机位全为 0 则表示的是网段</li>
+<li>主机位不能全为 1，主机为全为 1 则表示的是广播地址</li>
 </ol>
-</li>
+<h2 id="八、ARP-协议"><a href="#八、ARP-协议" class="headerlink" title="八、ARP 协议"></a>八、ARP 协议</h2><p>地址解析协议：已知对方的 <code>IP地址</code>，解析对方的 <code>MAC地址</code>。<br>客户端在与对端设备通讯时，首先检测自身的 <code>ARP缓存表</code>，若自身的 <code>ARP缓存表</code> 中不存在对端的 <code>IP</code> 与 <code>MAC地址</code> 的映射关系，则信源发送 <code>ARP广播请求</code>。<br>在信源发送的 <code>ARP广播请求</code> 中，包含了其自身的 <code>源IP地址</code> 与 <code>源MAC地址</code>，当对端设备接收到该 <code>ARP广播请求</code> 后，对端设备将会给予单播响应回复，而无需发送广播响应。<br>在信源得知了对端的 <code>MAC地址</code> 后，将对端设备 <code>IP地址</code> 与 <code>MAC地址</code> 做对应关系，保存在自身的 <code>ARP缓存表</code> 中后，方可与对端通讯。</p>
+<h2 id="九、RARP-反向地址解析协议"><a href="#九、RARP-反向地址解析协议" class="headerlink" title="九、RARP 反向地址解析协议"></a>九、RARP 反向地址解析协议</h2><p>已知自身的 MAC地址，广播请求一个 IP地址<br>网络中的负责分配 IP地址 的服务器单薄给予响应，为客户端分配 IP地址</p>
+<p><code>注：RARP就是DHCP的前身协议</code><br>RARP 因为需要让负责分配 <code>IP地址</code> 的服务器预先知道客户端的 <code>MAC地址</code> 后，才能给客户端分配 <code>IP地址</code>。</p>
+<h2 id="十、代理-ARP"><a href="#十、代理-ARP" class="headerlink" title="十、代理 ARP"></a>十、代理 ARP</h2><ol>
+<li>路由器默认情况下不会发送广播报文。</li>
+<li>来自客户端的 <code>ARP广播请求</code> 不会被路由器传至对端。</li>
+<li>路由器会将自身接口的 <code>IP地址</code> 与 <code>MAC地址</code> 以单播的方式响应给信源主机，信源主机的 <code>ARP缓存表</code> 中保存的就是直连路由器的接口 <code>IP地址</code> 与 <code>MAC地址</code> 的对应关系。</li>
+<li>信源主机就会将所有访问目标网络的数据统一发送给自己的直连路由器。</li>
+<li>路由器在两个客户端通讯的过程中，起到代理的作用。</li>
 </ol>
-<h2 id="三-STP的5种端口状态"><a href="#三-STP的5种端口状态" class="headerlink" title="三. STP的5种端口状态"></a>三. STP的5种端口状态</h2><ol>
-<li>禁用[Disable]：不发送 BPDU， 不接受 BPDU，不学习 MAC 地址，不会转发数据。</li>
-<li>阻塞[Discarding]：不发送 BPDU，<strong>接受 BPDU</strong>，不学习 MAC 地址，不会转发数据。</li>
-<li>侦听[Listening]：<strong>发送 BPDU，接受 BPDU</strong>， 不学习 MAC 地址，不会转发数据<span style="color:red">【中间态】</span>。</li>
-<li>学习[Learning]：<strong>发送 BPDU，接受 BPDU，学习 MAC 地址</strong>，不会转发数据<span style="color:red">【中间态】</span>。</li>
-<li>转发[Forwarding]：<strong>发送 BPDU，接受 BPDU，学习 MAC 地址，转发数据。</strong></li>
-</ol>
-<h2 id="四-STP的拓扑结构变化"><a href="#四-STP的拓扑结构变化" class="headerlink" title="四. STP的拓扑结构变化"></a>四. STP的拓扑结构变化</h2><ol>
-<li>在生成树中，一个阻塞状态的端口从阻塞状态最终恢复至转发状态，一共需要 <span style="color:red;">50s</span>。</li>
-<li>Discarding 进入 Listening 需要 <span style="color:red;">20s</span> 【Maxage：最大老化时间】。</li>
-<li>Listening 进入 Learning 需要 <span style="color:red;">15s</span>。</li>
-<li>Learning 进入 Forwarding 需要 <span style="color:red;">15s</span> 【15s + 15s &#x3D; 30s Forwarding Dealy ：转发延迟】。</li>
-<li>若是非直连链路，端口恢复需要 50s。</li>
-<li>若是直连链路，只需 30s 【节省了 20s 的 maxage】。</li>
-<li>交换机的 MAC 地址表默认 300s maxage，当STP的拓扑结构发生变化时，STP的TCN BPDU 会立即通知交换机的 MAC 地址表立即刷新，令交换机的 MAC 地址表的刷新时间从 300s 变为 15s 。</li>
-</ol>
-<h2 id="五-STP的配置"><a href="#五-STP的配置" class="headerlink" title="五. STP的配置"></a>五. STP的配置</h2><ol>
-<li>在华为的交换机上，STP技术默认随着设备的启动而自动运行。</li>
-<li>更改交换机的优先级</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp priority 4096</span><br></pre></td></tr></table></figure>
+<h2 id="十一、ICMP-【网际控制消息协议】"><a href="#十一、ICMP-【网际控制消息协议】" class="headerlink" title="十一、ICMP 【网际控制消息协议】"></a>十一、ICMP 【网际控制消息协议】</h2><ul>
+<li>ICMP：用来检测网络的双向连通性。</li>
+<li>ping [-t] [-a] [-l 字节数] IP_Address ｜ Target_names</li>
+</ul>
 
-<ol start="3">
-<li>更改当前交换机的STP模式</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp mode stp</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>更改STP的路径计算方式</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stp pathcost-standard dotld-1998</span><br></pre></td></tr></table></figure>
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2023/08/24/hexo%E9%83%A8%E7%BD%B2/" target="_self">
+              <a href="/2023/08/31/HCIA/HCIA-7-%E9%93%BE%E8%B7%AF%E8%81%9A%E5%90%88/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -261,7 +286,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-30 21:21:46
+              2023-09-02 19:12:13
             </span>
             
                   <span class="post-tags">
@@ -274,8 +299,8 @@
                     </span>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/STP/" title="STP">
-                        #STP
+                      <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/" title="网络层">
+                        #网络层
                       </a>
                     </span>
                     
@@ -284,7 +309,7 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2023/08/31/HCIA-7-%E9%93%BE%E8%B7%AF%E8%81%9A%E5%90%88/" target="_self">
+              <a href="/2023/09/02/HCIA/HCIA-10-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -301,7 +326,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BA%8C%E5%B1%82%E5%B9%BF%E6%92%AD%E9%A3%8E%E6%9A%B4%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="toc-text">一、二层广播风暴的产生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81STP%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">二、STP的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-STP%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-text">2. STP的算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E9%80%89%E6%8B%A9%E6%A0%B9%E7%BD%91%E6%A1%A5%E3%80%90root%E3%80%91"><span class="toc-text">2.1 选择根网桥【root】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%80%89%E6%8B%A9%E6%A0%B9%E7%AB%AF%E5%8F%A3%E3%80%90RP%E3%80%91"><span class="toc-text">2.2 选择根端口【RP】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%80%89%E6%8B%A9%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3%E3%80%90DP%E3%80%91"><span class="toc-text">2.3 选择指定端口【DP】</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-BPDU-%E3%80%90Bridge-Protocol-Data-Unit-%EF%BD%9C-%E6%A1%A5%E6%8E%A5%E5%8D%8F%E8%AE%AE%E6%95%B0%E6%8D%AE%E5%8D%95%E5%85%83%E3%80%91"><span class="toc-text">3 BPDU 【Bridge Protocol Data Unit ｜ 桥接协议数据单元】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-STP%E7%9A%845%E7%A7%8D%E7%AB%AF%E5%8F%A3%E7%8A%B6%E6%80%81"><span class="toc-text">三. STP的5种端口状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-STP%E7%9A%84%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96"><span class="toc-text">四. STP的拓扑结构变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-STP%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">五. STP的配置</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="toc-text">一、网络层的主要功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%8C%85%E5%A4%B4%E6%A0%BC%E5%BC%8F"><span class="toc-text">IP包头格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QoS%E3%80%90%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E3%80%91"><span class="toc-text">QoS【服务质量】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84IPv4%E5%A4%B4%E9%83%A8"><span class="toc-text">二、网络层的IPv4头部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81IP%E5%9C%B0%E5%9D%80%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">三、IP地址的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81IP%E5%9C%B0%E5%9D%80%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">四、IP地址的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%A7%81%E6%9C%89%E5%9C%B0%E5%9D%80"><span class="toc-text">五、私有地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">六、子网掩码的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AD%90%E7%BD%91%E7%9A%84%E5%88%92%E5%88%86"><span class="toc-text">七、子网的划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81ARP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">八、ARP 协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81RARP-%E5%8F%8D%E5%90%91%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="toc-text">九、RARP 反向地址解析协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E4%BB%A3%E7%90%86-ARP"><span class="toc-text">十、代理 ARP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81ICMP-%E3%80%90%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%B6%88%E6%81%AF%E5%8D%8F%E8%AE%AE%E3%80%91"><span class="toc-text">十一、ICMP 【网际控制消息协议】</span></a></li></ol>
       
     </div>
   </div>
@@ -587,12 +612,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%206%20--%20STP + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F08%2F30%2FHCIA-6-STP%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%209%20--%20%E7%BD%91%E7%BB%9C%E5%B1%82 + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F09%2F01%2FHCIA%2FHCIA-9-%25E7%25BD%2591%25E7%25BB%259C%25E5%25B1%2582%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/08/30/HCIA-6-STP/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/09/01/HCIA/HCIA-9-%E7%BD%91%E7%BB%9C%E5%B1%82/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
