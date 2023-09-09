@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>HCIA -- 15 -- PPP</title>
+      <link href="/2023/09/09/HCIA/HCIA-15-PPP/"/>
+      <url>/2023/09/09/HCIA/HCIA-15-PPP/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一、PPP的基本概念"><a href="#一、PPP的基本概念" class="headerlink" title="一、PPP的基本概念"></a>一、PPP的基本概念</h1><ol><li>PPP【Point to Point Protocol】是属于数据链路层协议，不会因IP的问题导致down掉，PPP的连接建立完全依靠数据链路层的MAC</li><li>PPP的前身SLTP【Serial Line Internet Protocol｜串行链路互联网协议】</li><li>SLIP的缺点：<ol><li>SLIP不支持地址自动协商，需要用户自行配置</li><li>SLIP只支持IP协议，在其数据包中，不包含协议字段，因此其无法支持IPX、Appletalk、MPLS</li><li>SLIP不支持校验功能，无法对传输的数据进行校验和检测</li><li>1989年，PPP被正式提出，1994年成为互联网标准协议之一</li></ol></li></ol><h1 id="二、PPP的优势"><a href="#二、PPP的优势" class="headerlink" title="二、PPP的优势"></a>二、PPP的优势</h1><ol><li>PPP同时支持同步传输与异步传输通信</li><li>支持各种各样的网络层协议【IP、IPX、AppleTalk、MPLS】</li><li>支持地址的自动协商</li><li>支持数据的校验和检测</li><li>支持PAP、CHAP这两种用户验证</li><li>支持数据压缩【仅对有效的载荷数据进行压缩】</li></ol><h1 id="三、PPP的组成"><a href="#三、PPP的组成" class="headerlink" title="三、PPP的组成"></a>三、PPP的组成</h1><p><img src="/../../images/HCIA/PPP/PPP%E7%9A%84%E7%BB%84%E6%88%90.png" alt="PPP的组成.png"></p><ol><li>PPP是由3个部分组成的<ol><li>物理层的封装报文的方式【同步传输&#x2F;异步传输】</li><li>LCP【Link Control-Protocol｜链路控制协议】：用来建立、维护、配置、终止一段数据链路层的协议</li><li>NCP【Network Control-Protocol｜网络控制协议】：用来在一个已经建立完连接的PPP网络上进行IP层的协商与通讯</li></ol></li></ol><h1 id="四、PPP链路的建立"><a href="#四、PPP链路的建立" class="headerlink" title="四、PPP链路的建立"></a>四、PPP链路的建立</h1><p><img src="/../../images/HCIA/PPP/PPP%E9%93%BE%E8%B7%AF%E7%9A%84%E5%BB%BA%E7%AB%8B.png" alt="PPP链路的建立"></p><ol><li>物理链路不可用阶段</li><li>数据链路层的链路建立阶段</li><li>提交用户认证阶段</li><li>认证成功进入网络协商阶段</li><li>若认证失败则进入链路终止阶段</li></ol><h1 id="五、PPP的帧格式"><a href="#五、PPP的帧格式" class="headerlink" title="五、PPP的帧格式"></a>五、PPP的帧格式</h1><p><img src="/../../images/HCIA/PPP/PPP%E7%9A%84%E5%B8%A7%E6%A0%BC%E5%BC%8F.png" alt="PPP的帧格式"></p><h1 id="六、PPP支持2种认证"><a href="#六、PPP支持2种认证" class="headerlink" title="六、PPP支持2种认证"></a>六、PPP支持2种认证</h1><ol><li>PAP【Password Authentication Protocol｜口令认证协议】<ul><li>PAP是2次握手认证协议</li><li>由被认证方主动发起认证请求</li><li>所有的用户名及密钥均使用明文方式传递</li></ul></li><li>CHAP【Challenge HandShake Authentication Protocol｜质询握手认证协议】<ul><li>CHAP时3次握手认证协议</li><li>由主认证方首先发起认证请求</li><li>主&#x2F;被双方相互验证</li><li>密钥并不直接发送，而是使用三次握手过程中保持不变的ID值，主认证方随机生成的数据，以及双方共同知道的密钥，合在一起，使用HASH的MD5进行加密，加密之后再发送</li></ul></li></ol><h1 id="实验配置"><a href="#实验配置" class="headerlink" title="实验配置"></a>实验配置</h1><h2 id="PAP"><a href="#PAP" class="headerlink" title="PAP"></a>PAP</h2><h2 id="CHAP"><a href="#CHAP" class="headerlink" title="CHAP"></a>CHAP</h2>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> HCIA </tag>
+            
+            <tag> PPP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HCIA -- 14 -- NAT</title>
       <link href="/2023/09/08/HCIA/HCIA-14-NAT/"/>
       <url>/2023/09/08/HCIA/HCIA-14-NAT/</url>
