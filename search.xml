@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>HCIA -- 16 -- AAA</title>
+      <link href="/2023/09/13/HCIA/HCIA-16-AAA/"/>
+      <url>/2023/09/13/HCIA/HCIA-16-AAA/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一、AAA的基本概念"><a href="#一、AAA的基本概念" class="headerlink" title="一、AAA的基本概念"></a>一、AAA的基本概念</h1><ol><li>认证【Authentication】：在启用AAA功能后，认证功能是必须要配置的，它完成了向用户提问【你是谁】的作用。</li><li>授权【Authorization】：在启用AAA功能后，授权、并不是必须要配置的，它完成了向用户提问【你能做什么】的作用。</li><li>审计【Accounting】：在启用AAA功能后，审计并不是必须要配置的，它完成了向用户提问【你都做了什么】的作用。</li></ol><h1 id="二、AAA常见的网络架构"><a href="#二、AAA常见的网络架构" class="headerlink" title="二、AAA常见的网络架构"></a>二、AAA常见的网络架构</h1><p><img src="/../../images/HCIA/AAA/AAA%E7%9A%84%E5%B8%B8%E8%A7%81%E6%9E%B6%E6%9E%84.png" alt="AAA的常见架构"></p><ol><li>AAA既可以在路由器本地做验证、授权；也可以去连接一台专用的AAA服务器。</li><li>若AAA在路由器本地做验证，则路由器需要自主创建用户账户与授权命令。</li><li>若AAA是在AAA服务器上完成的，则路由器将全部的终端用户请求发送至AAA服务器，AAA服务器进行验证，之后将验证结果通知路由器。</li></ol><p><code>注：在AAA的场景中，路由器称之为：客户端；AAA Server 称之为：服务器；访问用户称之为：终端用户</code></p><h1 id="三、AAA的认证"><a href="#三、AAA的认证" class="headerlink" title="三、AAA的认证"></a>三、AAA的认证</h1><ol><li>不认证：相当于丧失了全部的网络安全特性，不建议。</li><li>本地认证：在路由器本地数据库中对用户进行认证。</li><li>远端认证：在AAA服务器上进行认证，回传认证结果。</li></ol><h1 id="四、AAA的授权"><a href="#四、AAA的授权" class="headerlink" title="四、AAA的授权"></a>四、AAA的授权</h1><ol><li>不授权：相当于是以管理员身份进入，能够配置所有内容。</li><li>本地授权：在路由器本地数据库中对已经登录的用户进行授权。</li><li>远端授权：在AAA服务器上进行授权，回传结果给路由器，路由器通知终端用户。</li></ol><h1 id="五、AAA的审计"><a href="#五、AAA的审计" class="headerlink" title="五、AAA的审计"></a>五、AAA的审计</h1><ol><li>不审计：相当于不对用户所做的任何操作做记录。</li><li>远端审计：在AAA服务器上做审计，不能在路由器本地做审计。</li></ol><h1 id="六、RADIUS与TACAS协议"><a href="#六、RADIUS与TACAS协议" class="headerlink" title="六、RADIUS与TACAS协议"></a>六、RADIUS与TACAS协议</h1><ol><li>RADIUS协议是公有协议，各个友商设备均支持，只不过各个友商都对RADIUS协议做了私有化的改进。</li><li>TACACS协议时Cisco的私有协议，华为也对TACACS协议进行了私有化的改进——HWTACACS</li><li>RADIUS协议与TACACS的区别：<ol><li>RADIUS是基于UDP的协议开发的【不保证可靠性】，在网络中断又恢复后，不会自动连接，需要管理员手动连接，同时仅仅只能对1台设备提供AAA的功能。</li><li>TACACS是基于TCP的协议开发的【保证可靠性】，能够在网络重新恢复后自动连接；TACACS能够同时为多个网络设备提供AAA的功能。</li></ol></li></ol><p><code>注：华为的网络设备在配置AAA时，使用的端口号码为1812</code></p><h1 id="实验配置"><a href="#实验配置" class="headerlink" title="实验配置"></a>实验配置</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> HCIA </tag>
+            
+            <tag> AAA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HCIA -- 15 -- PPP</title>
       <link href="/2023/09/09/HCIA/HCIA-15-PPP/"/>
       <url>/2023/09/09/HCIA/HCIA-15-PPP/</url>
