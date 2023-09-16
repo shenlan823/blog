@@ -155,7 +155,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-30 20:47:40
+          2023-09-16 12:50:43
         </span>
         
       </div>
@@ -168,37 +168,55 @@
 </li>
 </ul>
 <p>官方文档 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">https://hexo.io/zh-cn/</a></p>
-<h2 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h2><p>下载<a target="_blank" rel="noopener" href="https://nodejs.org/en/download/releases">node.js</a></p>
-<p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/nodejs.png" alt="node.js"><br>后面的默认就可以了</p>
-<p>安装完成后，在命令行输入<code>node -v</code>，出现版本号<code>v20.5.1</code>则表示安装成功。</p>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>安装<a target="_blank" rel="noopener" href="https://gitforwindows.org/">git for windows</a></p>
-<p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/git.png" alt="git"><br>和上面一样，默认即可</p>
-<p>安装完成后，在命令行输入<code>git -v</code>，出现版本号<code>git version 2.42.0</code>则表示安装成功。</p>
-<h3 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;你的邮箱地址&quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h1><p>下载 <a target="_blank" rel="noopener" href="https://nodejs.org/en/download/releases">node.js</a></p>
+<p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/nodejs.png" alt="nodejs"></p>
+<p>后面的默认就可以了</p>
+<p>安装完成后，在命令行输入 <code>node -v</code>，出现版本号 <code>v20.5.1</code> 则表示安装成功。</p>
+<h1 id="git"><a href="#git" class="headerlink" title="git"></a>git</h1><p>安装 <a target="_blank" rel="noopener" href="https://gitforwindows.org/">git for windows</a></p>
+<p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/git.png" alt="git"></p>
+<p>和上面一样，默认即可</p>
+<p>安装完成后，在命令行输入 <code>git -v</code>，出现版本号 <code>git version 2.42.0</code> 则表示安装成功。</p>
+<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-C</span> <span class="token string">"你的邮箱地址"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/git_ssh.png" alt="git-ssh"><br>一直回车就可以了</p>
-<p>然后将 <strong>id_rsa.pub</strong> 的内容复制到github的 SSH 中即可。</p>
+<p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/git_ssh.png" alt="git-ssh"></p>
+<p>一直回车就可以了</p>
+<p>然后将 <strong>id_rsa.pub</strong> 的内容复制到 github 的 SSH 中即可。</p>
 <p><strong>测试ssh是否绑定成功</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#命令行中输入</span></span><br><span class="line">$ ssh -T git@github.com</span><br><span class="line"></span><br><span class="line"><span class="comment">#出现这段话表示连接成功</span></span><br><span class="line"><span class="comment">#Hi shenlan823! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#命令行中输入</span>
+$ <span class="token function">ssh</span> <span class="token parameter variable">-T</span> git@github.com
 
-<h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><p><strong>一键部署</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br><span class="line">$ hexo server -p 5555</span><br></pre></td></tr></table></figure>
+<span class="token comment">#出现这段话表示连接成功</span>
+<span class="token comment">#Hi shenlan823! You've successfully authenticated, but GitHub does not provide shell access.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在浏览器输入 <em><a target="_blank" rel="noopener" href="http://localhost:5555/">http://localhost:5555</a></em> 检查是否搭建成功</p>
+<h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><p>一键部署</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-cli <span class="token parameter variable">-g</span>
+$ hexo init blog
+$ <span class="token builtin class-name">cd</span> blog
+$ <span class="token function">npm</span> <span class="token function">install</span>
+$ hexo server <span class="token parameter variable">-p</span> <span class="token number">5555</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在浏览器输入 <a target="_blank" rel="noopener" href="http://localhost:5555/">http://localhost:5555</a> 检查是否搭建成功</p>
 <p><img src="/../../images/hexo%E5%AE%89%E8%A3%85/hexo-example.png" alt="hexo-example"></p>
-<h2 id="部署网站"><a href="#部署网站" class="headerlink" title="部署网站"></a>部署网站</h2><h3 id="1-安装-hexo-deployer-git"><a href="#1-安装-hexo-deployer-git" class="headerlink" title="1. 安装 hexo-deployer-git"></a>1. 安装 <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<h1 id="部署网站"><a href="#部署网站" class="headerlink" title="部署网站"></a>部署网站</h1><h2 id="1-安装-hexo-deployer-git"><a href="#1-安装-hexo-deployer-git" class="headerlink" title="1. 安装 hexo-deployer-git"></a>1. 安装 <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a></h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git <span class="token parameter variable">--save</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2. 修改配置"></a>2. 修改配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#博客项目配置文件_config.yml(非主题配置文件)</span></span><br><span class="line">url: https://shenlan823.github.io</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: &lt;repository url&gt; <span class="comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  branch: [branch]</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2. 修改配置"></a>2. 修改配置</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#博客项目配置文件_config.yml(非主题配置文件)</span>
+url: https://shenlan823.github.io
 
-<h3 id="3-生成静态页面"><a href="#3-生成静态页面" class="headerlink" title="3. 生成静态页面"></a>3. 生成静态页面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+deploy:
+  type: <span class="token function">git</span>
+  repo: <span class="token operator">&lt;</span>repository url<span class="token operator">></span> <span class="token comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span>
+  branch: <span class="token punctuation">[</span>branch<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="4-部署网站"><a href="#4-部署网站" class="headerlink" title="4. 部署网站"></a>4. 部署网站</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h2 id="3-生成静态页面"><a href="#3-生成静态页面" class="headerlink" title="3. 生成静态页面"></a>3. 生成静态页面</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="5-查看网站"><a href="#5-查看网站" class="headerlink" title="5. 查看网站"></a>5. 查看网站</h3><p>   在浏览器输入 <a href="https://shenlan823.github.io/">https://shenlan823.github.io</a></p>
-<h2 id="更换模版"><a href="#更换模版" class="headerlink" title="更换模版"></a>更换模版</h2><p>以本模版为例</p>
+<h2 id="4-部署网站"><a href="#4-部署网站" class="headerlink" title="4. 部署网站"></a>4. 部署网站</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="5-查看网站"><a href="#5-查看网站" class="headerlink" title="5. 查看网站"></a>5. 查看网站</h2><p>在浏览器输入 <a href="https://shenlan823.github.io/">https://shenlan823.github.io</a></p>
+<h1 id="更换模版"><a href="#更换模版" class="headerlink" title="更换模版"></a>更换模版</h1><p>以本模版为例</p>
 <p><a target="_blank" rel="noopener" href="https://hexo.io/themes/">选择模版 https://hexo.io/themes/</a></p>
-<p>下载模版，解压到 <code>/blog/themes</code> 下，并改名 oranges。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在hexo根配置文件 _config.yml 中设置你的主题</span></span><br><span class="line">themes: oranges</span><br></pre></td></tr></table></figure>
+<p>下载模版，解压到<code> /blog/themes</code> 下，并改名 <code>oranges</code>。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在hexo根配置文件 _config.yml 中设置你的主题</span>
+themes: oranges<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>模版地址：<a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Oranges</a></p>
 
@@ -216,7 +234,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-30 20:47:40
+              2023-09-16 12:50:43
             </span>
             
           </div>
@@ -239,7 +257,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nodejs"><span class="toc-text">Nodejs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git"><span class="toc-text">git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AESSH"><span class="toc-text">配置SSH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hexo"><span class="toc-text">hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99"><span class="toc-text">部署网站</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85-hexo-deployer-git"><span class="toc-text">1. 安装 hexo-deployer-git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-text">2. 修改配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2"><span class="toc-text">3. 生成静态页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99"><span class="toc-text">4. 部署网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%AB%99"><span class="toc-text">5. 查看网站</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E6%A8%A1%E7%89%88"><span class="toc-text">更换模版</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nodejs"><span class="toc-text">Nodejs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git"><span class="toc-text">git</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AESSH"><span class="toc-text">配置SSH</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hexo"><span class="toc-text">hexo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99"><span class="toc-text">部署网站</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85-hexo-deployer-git"><span class="toc-text">1. 安装 hexo-deployer-git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-text">2. 修改配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2"><span class="toc-text">3. 生成静态页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99"><span class="toc-text">4. 部署网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%AB%99"><span class="toc-text">5. 查看网站</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E6%A8%A1%E7%89%88"><span class="toc-text">更换模版</span></a></li></ol>
       
     </div>
   </div>
@@ -525,12 +543,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%83%A8%E7%BD%B2hexo%E5%88%B0github%E4%B8%8A + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F08%2F24%2Fhexo%25E9%2583%25A8%25E7%25BD%25B2%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%83%A8%E7%BD%B2hexo%E5%88%B0github%E4%B8%8A + '&url=' + https%3A%2F%2Fshenlan823.github.io%2F2023%2F08%2F24%2F%25E9%2583%25A8%25E7%25BD%25B2hexo%25E5%2588%25B0github%25E4%25B8%258A%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/08/24/hexo%E9%83%A8%E7%BD%B2/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://shenlan823.github.io/2023/08/24/%E9%83%A8%E7%BD%B2hexo%E5%88%B0github%E4%B8%8A/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
