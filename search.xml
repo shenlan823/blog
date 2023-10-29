@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>HCIP -- 3 -- 传输层</title>
+      <link href="/2023/10/29/HCIP/HCIP-3-%E4%BC%A0%E8%BE%93%E5%B1%82/"/>
+      <url>/2023/10/29/HCIP/HCIP-3-%E4%BC%A0%E8%BE%93%E5%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一、传输层的概念"><a href="#一、传输层的概念" class="headerlink" title="一、传输层的概念"></a>一、传输层的概念</h1><ol><li>在网络通讯的过程中，依靠网络层实现了【发现对端】的作用</li><li>在实现了【发现对端】后，我们需要精准的找到客户所想要访问的具体服务&#x2F;进程</li><li>传输层提供的端口号码的概念就满足了找到对方应用进程的目的</li></ol><h1 id="二、传输层的协议"><a href="#二、传输层的协议" class="headerlink" title="二、传输层的协议"></a>二、传输层的协议</h1><ol><li>TCP【传输控制协议】：属于面向连接的协议，在数据发送前，需要与会双方先建立连接，TCP发送的数据保证可靠性，但传输效率低下</li><li>UDP【用户数据报协议】：在数据发送前，不需要与会双方建立连接，UDP发送的数据不保证可靠性，但传输效率高</li></ol><h1 id="三、TCP的头部格式"><a href="#三、TCP的头部格式" class="headerlink" title="三、TCP的头部格式"></a>三、TCP的头部格式</h1><p><img src="/../../images/HCIP/%E7%BD%91%E7%BB%9C%E5%B1%82/TCP%E7%9A%84%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F.png" alt="TCP的封装格式"></p><p><code>TCP的头部默认大小：20Byte</code></p><ol><li>源端口号码</li><li>目标端口号码</li><li>发送数据时所携带的序列号</li><li>接收端接收到数据包后给予的响应报文的确认号</li><li>4bit的首部长度字段：20Byte</li><li>6bit的保留字段</li><li>URG位【紧急指针位】：若想要将某段数据立即发送，则可将该段数据的最后一位 URG 位置为 1，表明从该段数据的第一个包至当前 URG 置位为 1 的包全部都是紧急指针位，URG&#x3D;1 的数据不进入缓存区，直接被用户进程所处理</li><li>ACK位【确认位】：表明收到对端数据后的确认报文</li><li>PSH位：若某段数据的 PSH 位置为 1，则表明该段数据进入缓存区后，不用等待缓存区满载再提交给用户进程处理，而是直接将欠载的缓存区数据提交给用户进程处理</li><li>RST位：表明请求与对端重新建立连接</li><li>SYN位：表明请求与对方建立连接</li><li>FIN位：表明请求与对方断开连接</li><li>16位的滑动窗口：用来实现流量控制</li><li>首部检验和字段：</li></ol><h1 id="四、TCP的3次握手"><a href="#四、TCP的3次握手" class="headerlink" title="四、TCP的3次握手"></a>四、TCP的3次握手</h1><ol><li>Client A 主动向 Client B 发送 SYN&#x3D;1 的请求连接</li><li>Client B 向 Client A 发送 SYN&#x3D;1 的请求连接数据包，同时为了确认接收到了Client A 的 SYN，Client B 将 ACK&#x3D;1，表明确认收到了 Client A 的 SYN</li><li>Client A 给 Client B 回应的 ACK&#x3D;1 的确认报文</li></ol><h1 id="五、TCP的4次断开"><a href="#五、TCP的4次断开" class="headerlink" title="五、TCP的4次断开"></a>五、TCP的4次断开</h1><ol><li>CLient A 主动向 Client B 发送 FIN&#x3D;1 的请求断开连接</li><li>CLient B 首先向 CLient A 进行 ACK&#x3D;1 的确认响应</li><li>Client B 也向 Client A 发送 FIN&#x3D;1 的请求断开连接</li><li>CLient A 向 Client B 回复 ACK&#x3D;1 的响应报文</li></ol><h1 id="六、TCP的滑动窗口"><a href="#六、TCP的滑动窗口" class="headerlink" title="六、TCP的滑动窗口"></a>六、TCP的滑动窗口</h1><ol><li>TCP使用滑动窗口的概念来完成【流量控制】机制方式：与会双方在TCP 3 次握手完成之后，首先确定接收方的缓冲区大小，之后发送方与接收方缓冲区大小相等的数据给对端，接收方在缓冲区满载后开始逐个处理数据包，接收方的缓冲区会被逐渐放空，此时接收方使用滑动窗口的概念来动态的通知接收方调整数据发送的大小</li><li>TCP使用滑动窗口的概念来完成【拥塞管理】机制方式：在与会双方发送数据前先建立TCP3次握手，与会双方协商今后一次性传递的窗口大小，在协商成功后，发送方传递数据，而后发送方没有收到全部的 ACK 响应报文，但接收方依旧标称自身可接收之前协商好的窗口大小数据，此时，发送方可以确定，中间的链路出现拥塞，然后发送方自动调整一次性数据的发送大小</li></ol><h1 id="七、TCP中的四种计时器"><a href="#七、TCP中的四种计时器" class="headerlink" title="七、TCP中的四种计时器"></a>七、TCP中的四种计时器</h1><ol><li>重传计时器【60s】：为保证数据传送的可靠性，TCP要求接收方每收到一个数据包，就必须给发送方发送一个ACK的确认报文。若在重传计时器到时前，发送方依旧没有接收到接收方传送过来的ACK，则发送方将会重新传送上一个报文，直到发送方接收到了确认报文为止<ul><li><blockquote><p>i &#x3D; 90%<br> 上一次的 RTT * i +（1-i）* 此次的RTT值</p></blockquote></li></ul></li><li>坚持计时器【60s】：<ul><li>目的：为了防止零窗口死锁</li><li>工作过程：发送方向接收方传递2个窗口的数据，接收方发送ACK表明缓冲区已满，此时发送方将会开启一个坚持计时器，在坚持计时器到时前，若发送方接收到了接收方传送的后续ACK报文，则发送方复位计时器，继续传送后续报文；若在坚持计时器到时前，发送方没有接收到接收方所发送的后续ACK报文，则此时发送方将主动向接收方发送探测报文，询问是否可以接受后续报文</li></ul></li><li>保活计时器【2小时】：<ul><li>目的：为了防止一个TCP的过长的空连接</li><li>若某客户端与服务器建立了TCP3次握手后，在2小时内没有发起任何的通讯连接请求，则此时服务器将会主动向客户端发送10个【间隔75s】的探测数据段，若10个探测数据段过程结束后，客户端依旧没有响应，则服务器可主动中断连接，防止一个过长的TCP连接持续占用网络及服务器资源</li></ul></li><li>时间等待计时器【30s-2m】：<ul><li>目的：在TCP 4次断开时，若CLient A 在发送完最后一个ACK后立即断开连接，而此时的ACK报文，CLient B 并没有收到，则此时会出现：Client A 已经断开连接，而Client B却依旧保持连接的问题</li><li>解决方案：在Client A 发送完最后一个ACK后，不立即断开连接，而是等待一个2MSL【Max Segment Lifetime】时间，等到 Client B 已经断开连接后，Client A 在断开连接，保证与会双工均成功的结束通讯</li><li><code>注：TCP下的各种服务所使用的MSL时间亦不相同【30s-2m】</code></li></ul></li></ol><h1 id="八、UDP的头部格式"><a href="#八、UDP的头部格式" class="headerlink" title="八、UDP的头部格式"></a>八、UDP的头部格式</h1><ol><li>源端口号码</li><li>目标端口号码</li><li>16位的UDP长度</li><li>16位的UDP校验和【可选项，默认不使用】</li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 网络层 </tag>
+            
+            <tag> HCIP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HCIP -- 1 -- OSPF的多区域</title>
       <link href="/2023/10/22/HCIP/HCIP-1-OSPF%E7%9A%84%E5%A4%9A%E5%8C%BA%E5%9F%9F/"/>
       <url>/2023/10/22/HCIP/HCIP-1-OSPF%E7%9A%84%E5%A4%9A%E5%8C%BA%E5%9F%9F/</url>
