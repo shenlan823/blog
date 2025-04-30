@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="" color-mode="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="shenlan" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      HCIA -- 15 -- PPP 
+      
+      
+      |
+    
+     随波逐流
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body>
+        <div id="app">
+            <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">随波逐流</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">首页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+                <div class="flex-container">
+                    <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">HCIA -- 15 -- PPP</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-09-16 23:11:35
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/HCIA/" title="HCIA">
+                    #HCIA
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/PPP/" title="PPP">
+                    #PPP
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="一、PPP的基本概念"><a href="#一、PPP的基本概念" class="headerlink" title="一、PPP的基本概念"></a>一、PPP的基本概念</h1><ol>
+<li>PPP【Point to Point Protocol】是属于数据链路层协议，不会因IP的问题导致down掉，PPP的连接建立完全依靠数据链路层的MAC</li>
+<li>PPP的前身SLTP【Serial Line Internet Protocol｜串行链路互联网协议】</li>
+<li>SLIP的缺点：<ol>
+<li>SLIP不支持地址自动协商，需要用户自行配置</li>
+<li>SLIP只支持IP协议，在其数据包中，不包含协议字段，因此其无法支持IPX、Appletalk、MPLS</li>
+<li>SLIP不支持校验功能，无法对传输的数据进行校验和检测</li>
+<li>1989年，PPP被正式提出，1994年成为互联网标准协议之一</li>
+</ol>
+</li>
+</ol>
+<h1 id="二、PPP的优势"><a href="#二、PPP的优势" class="headerlink" title="二、PPP的优势"></a>二、PPP的优势</h1><ol>
+<li>PPP同时支持同步传输与异步传输通信</li>
+<li>支持各种各样的网络层协议【IP、IPX、AppleTalk、MPLS】</li>
+<li>支持地址的自动协商</li>
+<li>支持数据的校验和检测</li>
+<li>支持PAP、CHAP这两种用户验证</li>
+<li>支持数据压缩【仅对有效的载荷数据进行压缩】</li>
+</ol>
+<h1 id="三、PPP的组成"><a href="#三、PPP的组成" class="headerlink" title="三、PPP的组成"></a>三、PPP的组成</h1><p><img src="/../../images/HCIA/PPP/PPP%E7%9A%84%E7%BB%84%E6%88%90.png" alt="PPP的组成.png"></p>
+<ol>
+<li>PPP是由3个部分组成的<ol>
+<li>物理层的封装报文的方式【同步传输&#x2F;异步传输】</li>
+<li>LCP【Link Control-Protocol｜链路控制协议】：用来建立、维护、配置、终止一段数据链路层的协议</li>
+<li>NCP【Network Control-Protocol｜网络控制协议】：用来在一个已经建立完连接的PPP网络上进行IP层的协商与通讯</li>
+</ol>
+</li>
+</ol>
+<h1 id="四、PPP链路的建立"><a href="#四、PPP链路的建立" class="headerlink" title="四、PPP链路的建立"></a>四、PPP链路的建立</h1><p><img src="/../../images/HCIA/PPP/PPP%E9%93%BE%E8%B7%AF%E7%9A%84%E5%BB%BA%E7%AB%8B.png" alt="PPP链路的建立"></p>
+<ol>
+<li>物理链路不可用阶段</li>
+<li>数据链路层的链路建立阶段</li>
+<li>提交用户认证阶段</li>
+<li>认证成功进入网络协商阶段</li>
+<li>若认证失败则进入链路终止阶段</li>
+</ol>
+<h1 id="五、PPP的帧格式"><a href="#五、PPP的帧格式" class="headerlink" title="五、PPP的帧格式"></a>五、PPP的帧格式</h1><p><img src="/../../images/HCIA/PPP/PPP%E7%9A%84%E5%B8%A7%E6%A0%BC%E5%BC%8F.png" alt="PPP的帧格式"></p>
+<h1 id="六、PPP支持2种认证"><a href="#六、PPP支持2种认证" class="headerlink" title="六、PPP支持2种认证"></a>六、PPP支持2种认证</h1><ol>
+<li>PAP【Password Authentication Protocol｜口令认证协议】<ul>
+<li>PAP是2次握手认证协议</li>
+<li>由被认证方主动发起认证请求</li>
+<li>所有的用户名及密钥均使用明文方式传递</li>
+</ul>
+</li>
+<li>CHAP【Challenge HandShake Authentication Protocol｜质询握手认证协议】<ul>
+<li>CHAP时3次握手认证协议</li>
+<li>由主认证方首先发起认证请求</li>
+<li>主&#x2F;被双方相互验证</li>
+<li>密钥并不直接发送，而是使用三次握手过程中保持不变的ID值，主认证方随机生成的数据，以及双方共同知道的密钥，合在一起，使用HASH的MD5进行加密，加密之后再发送</li>
+</ul>
+</li>
+</ol>
+<h1 id="实验配置"><a href="#实验配置" class="headerlink" title="实验配置"></a>实验配置</h1><h2 id="PAP"><a href="#PAP" class="headerlink" title="PAP"></a>PAP</h2><p><img src="/../../images/HCIA/PPP/pap.png" alt="pap"></p>
+<p><strong>被认证方</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>AR1-Serial1/0/0<span class="token punctuation">]</span>ip address <span class="token number">192.168</span>.1.1 <span class="token number">30</span>
+<span class="token punctuation">[</span>AR1-Serial1/0/0<span class="token punctuation">]</span>link-protocol ppp <span class="token comment">#修改链路协议</span>
+<span class="token punctuation">[</span>AR1-Serial1/0/0<span class="token punctuation">]</span>ppp pap local-user AR1     password   cipher   <span class="token number">123456</span>
+<span class="token comment">#                                   username          是否加密      password</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>主认证方</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>AR2<span class="token punctuation">]</span>aaa <span class="token comment">#配置数据库</span>
+<span class="token punctuation">[</span>AR2-aaa<span class="token punctuation">]</span>local-user AR1 password cipher <span class="token number">123456</span> <span class="token comment">#保持被认证方的用户名和密码</span>
+<span class="token punctuation">[</span>AR2-aaa<span class="token punctuation">]</span>local-user AR1 service-type ppp <span class="token comment">#指定 AR1 用户的服务类型</span>
+<span class="token punctuation">[</span>AR2-Serial1/0/0<span class="token punctuation">]</span>link-protocol ppp
+<span class="token punctuation">[</span>AR2-Serial1/0/0<span class="token punctuation">]</span>ppp authentication-mode pap <span class="token comment">#指定ppp的认证模式</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>验证</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>debugging ppp pap all
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>terminal debugging 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:51-08:00 AR2 %%01IFPDT/4/IF_STATE<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span>:Interface Serial1/0/0 
+has turned into UP state.
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53-08:00 AR2 %%01IFNET/4/LINK_STATE<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span>:The line protocol PP
+P on the interface Serial1/0/0 has entered the UP state. 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.838.3-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial1/0/0 PAP Initial  Event 
+      state Initial <span class="token comment">#初始化状态</span>
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.838.4-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial1/0/0 PAP Server Lower Up Event 
+      state Initial 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.838.5-08:00 AR2 PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 PAP <span class="token builtin class-name">:</span> Initial --<span class="token operator">></span> ServerListen <span class="token comment">#服务器的监听状态</span>
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.858.1-08:00 AR2 PPP/7/debug2:
+  PPP Packet: 
+      Serial1/0/0 Input  PAP<span class="token punctuation">(</span>c023<span class="token punctuation">)</span> Pkt, Len <span class="token number">19</span> 
+      State ServerListen, code Request<span class="token punctuation">(</span>01<span class="token punctuation">)</span>, <span class="token function">id</span> <span class="token number">1</span>, len <span class="token number">15</span> 
+      Host Len:  <span class="token number">3</span>  Name:AR1 <span class="token comment">#用户名 AR1</span>
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.858.2-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial1/0/0 PAP Receive Request Event <span class="token comment">#接收认证请求</span>
+      state ServerListen 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.858.3-08:00 AR2 PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 PAP <span class="token builtin class-name">:</span> ServerListen --<span class="token operator">></span> WaitAAA <span class="token comment">#等待AAA验证</span>
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.858.4-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial1/0/0 PAP AAA Result Event 
+      state WaitAAA 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.858.5-08:00 AR2 PPP/7/debug2:
+  PPP Packet: 
+      Serial1/0/0 Output PAP<span class="token punctuation">(</span>c023<span class="token punctuation">)</span> Pkt, Len <span class="token number">52</span> 
+      State WaitAAA, code Ack<span class="token punctuation">(</span>02<span class="token punctuation">)</span>, <span class="token function">id</span> <span class="token number">1</span>, len <span class="token number">48</span> 
+      Msg Len: <span class="token number">43</span>  Msg:Welcome to use Quidway ROUTER, Huawei Tech.
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53.858.6-08:00 AR2 PPP/7/debug2:
+  PPP State Change: 
+      Serial1/0/0 PAP <span class="token builtin class-name">:</span> WaitAAA --<span class="token operator">></span> ServerSuccess <span class="token comment">#认证成功</span>
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep  <span class="token number">9</span> <span class="token number">2023</span> <span class="token number">22</span>:45:53-08:00 AR2 %%01IFNET/4/LINK_STATE<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span>:The line protocol PP
+P IPCP on the interface Serial1/0/0 has entered the UP state. 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="CHAP"><a href="#CHAP" class="headerlink" title="CHAP"></a>CHAP</h2><p><img src="/../../images/HCIA/PPP/chap.png" alt="chap"></p>
+<p><strong>被认证方</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>AR1-Serial4/0/0<span class="token punctuation">]</span>ip address <span class="token number">192.168</span>.1.1 <span class="token number">30</span>
+<span class="token punctuation">[</span>AR1-Serial4/0/0<span class="token punctuation">]</span>link-protocol ppp
+<span class="token punctuation">[</span>AR1<span class="token punctuation">]</span>aaa <span class="token comment">#本地数据库</span>
+<span class="token punctuation">[</span>AR1-aaa<span class="token punctuation">]</span>local-user AR2 password cipher abc123456 <span class="token comment">#主认证方用户名和密码</span>
+<span class="token punctuation">[</span>AR1-aaa<span class="token punctuation">]</span>local-user AR2 service-type ppp <span class="token comment">#设置 AR2的服务类型为 PPP</span>
+<span class="token punctuation">[</span>AR1-Serial4/0/0<span class="token punctuation">]</span>ppp chap user AR1 <span class="token comment">#设置被认证方的认证名称为 AR1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>主认证方</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>AR2-Serial4/0/0<span class="token punctuation">]</span>ip address <span class="token number">192.168</span>.1.2 <span class="token number">30</span>
+<span class="token punctuation">[</span>AR2<span class="token punctuation">]</span>aaa
+<span class="token punctuation">[</span>AR2-aaa<span class="token punctuation">]</span>local-user AR1 password cipher abc123456
+<span class="token punctuation">[</span>AR2-aaa<span class="token punctuation">]</span>local-user AR1 service-type ppp
+<span class="token punctuation">[</span>AR2-Serial4/0/0<span class="token punctuation">]</span>ppp authentication-mode chap <span class="token comment">#设置 AR2 的认证方式为 chap</span>
+<span class="token punctuation">[</span>AR2-Serial4/0/0<span class="token punctuation">]</span>ppp chap user AR2 <span class="token comment">#设置主认证方对认证名称为 AR2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>验证</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>debugging ppp chap all
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>terminal debugging 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.6.3-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial4/0/0 CHAP Initial Event 
+      state Initial 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.6.4-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial4/0/0 CHAP Server Lower Up  Event 
+      state Initial 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.6.5-08:00 AR2 PPP/7/debug2:
+  PPP Packet: 
+      Serial4/0/0 Output CHAP<span class="token punctuation">(</span>c223<span class="token punctuation">)</span> Pkt, Len <span class="token number">28</span> 
+      State Initial, code Challenge<span class="token punctuation">(</span>01<span class="token punctuation">)</span>, <span class="token string">'id 1'</span>, len <span class="token number">24</span> 
+      Value_Size:  <span class="token number">16</span>  Value: <span class="token number">35</span> <span class="token number">53</span>  <span class="token number">8</span> <span class="token number">13</span> b8 1c 1c <span class="token number">28</span> fb c2 <span class="token number">35</span> 5e b4 9a b4 <span class="token number">98</span> 
+      Name: AR2
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.6.6-08:00 AR2 PPP/7/debug2:
+  PPP State Change: 
+      Serial4/0/0 CHAP <span class="token builtin class-name">:</span> Initial --<span class="token operator">></span> SendChallenge 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.1-08:00 AR2 PPP/7/debug2:
+  PPP Packet: 
+      Serial4/0/0 Input  CHAP<span class="token punctuation">(</span>c223<span class="token punctuation">)</span> Pkt, Len <span class="token number">28</span> 
+      State SendChallenge, code Response<span class="token punctuation">(</span>02<span class="token punctuation">)</span>, <span class="token function">id</span> <span class="token number">1</span>, len <span class="token number">24</span> 
+      Value_Size:  <span class="token number">16</span>  Value: <span class="token number">10</span> <span class="token number">66</span> 1d bd 8c ee <span class="token number">69</span> 9d <span class="token builtin class-name">cd</span> a0 <span class="token number">66</span> c7 f3 eb  <span class="token number">2</span> 1b 
+      Name: AR1
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.2-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial4/0/0 CHAP Receive Response Event 
+      state SendChallenge 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.3-08:00 AR2 PPP/7/debug2:
+  PPP State Change: 
+      Serial4/0/0 CHAP <span class="token builtin class-name">:</span> SendChallenge --<span class="token operator">></span> WaitAAA 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.4-08:00 AR2 AAA/7/DEBUG:
+ <span class="token punctuation">[</span>AAA EVENT<span class="token punctuation">]</span>AAA_MAIN-<span class="token operator">></span>AAA_AUTHEN:NormalAuthenReq <span class="token comment">#认证结果是一样的</span>
+    CID:0 Result:0 Info:3010195652
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.5-08:00 AR2 PPP/7/debug2:
+  PPP Event: 
+      Serial4/0/0 CHAP AAA Result Event 
+      state WaitAAA 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.6-08:00 AR2 PPP/7/debug2:
+  PPP State Change: 
+      Serial4/0/0 CHAP <span class="token builtin class-name">:</span> WaitAAA --<span class="token operator">></span> ServerSuccess 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span>
+Sep <span class="token number">16</span> <span class="token number">2023</span> <span class="token number">17</span>:17:23.26.7-08:00 AR2 PPP/7/debug2:
+  PPP Packet: 
+      Serial4/0/0 Output CHAP<span class="token punctuation">(</span>c223<span class="token punctuation">)</span> Pkt, Len <span class="token number">23</span> 
+      State ServerSuccess, code SUCCESS<span class="token punctuation">(</span>03<span class="token punctuation">)</span>, <span class="token function">id</span> <span class="token number">1</span>, len <span class="token number">19</span> 
+      Message: Welcome to AR2. 
+<span class="token operator">&lt;</span>AR<span class="token operator"><span class="token file-descriptor important">2</span>></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/09/08/HCIA/HCIA-14-NAT/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-09-16 23:11:35
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/HCIA/" title="HCIA">
+                        #HCIA
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/PPP/" title="PPP">
+                        #PPP
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/09/13/HCIA/HCIA-16-AAA/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81PPP%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、PPP的基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81PPP%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">二、PPP的优势</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81PPP%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">三、PPP的组成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81PPP%E9%93%BE%E8%B7%AF%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="toc-text">四、PPP链路的建立</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81PPP%E7%9A%84%E5%B8%A7%E6%A0%BC%E5%BC%8F"><span class="toc-text">五、PPP的帧格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81PPP%E6%94%AF%E6%8C%812%E7%A7%8D%E8%AE%A4%E8%AF%81"><span class="toc-text">六、PPP支持2种认证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E9%85%8D%E7%BD%AE"><span class="toc-text">实验配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PAP"><span class="toc-text">PAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CHAP"><span class="toc-text">CHAP</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+                        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://shenlan823.github.io">Copyright © 2025 随波逐流 By 随波逐流</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+                </div>
+
+                <div class="tools-bar">
+                    <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+                        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+                            
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+                                
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HCIA%20--%2015%20--%20PPP + '&url=' + https%3A%2F%2Fblog.shenlan.site%2F2023%2F09%2F09%2FHCIA%2FHCIA-15-PPP%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://blog.shenlan.site/2023/09/09/HCIA/HCIA-15-PPP/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+                </div>
+        </div>
+    </body>
+
+</html>
